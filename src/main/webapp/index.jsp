@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login - RigBuilder</title>
+        <link rel="icon" href="${pageContext.request.contextPath}/images/RigBuilder_site_watermark.png" type="image/x-icon">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index-login.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" type="text/css">
