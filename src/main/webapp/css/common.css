@@ -1,0 +1,88 @@
+@font-face {
+    font-family: "RigBuilder_font";
+    src: url("../fonts/Teachers-VariableFont_wght.ttf") format("embedded-opentype"),
+    url("../fonts/Teachers-VariableFont_wght.ttf") format('woff2'),
+    url("../fonts/Teachers-VariableFont_wght.ttf") format('woff'),
+    url("../fonts/Teachers-VariableFont_wght.ttf") format('truetype'),
+    url("../fonts/Teachers-VariableFont_wght.ttf") format('svg');
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:focus {
+    border: thin solid var(--grey);
+    -webkit-text-fill-color: var(--white);
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+:root {
+    --white: #fffcf2;
+    --lightGrey: rgba(204, 197, 185, 0.13);
+    --grey: rgba(64, 61, 57, 0.47);
+    --darkGrey: #1a1818;
+    --orange: #eb5e28;
+}
+
+* {
+    font-family: "RigBuilder_font", Helvetica, sans-serif;
+    color: var(--white);
+}
+
+body {
+    background-color: var(--darkGrey);
+    margin: 0;
+}
+
+input, button {
+    background-color: transparent;
+    border-radius: 0.6em;
+    border-width: thin;
+    font-size: 105%;
+    padding: 0.6em;
+    margin: 0.3em auto;
+    transition: 100ms;
+    border-color: var(--grey);
+    border-style: solid;
+}
+
+button {
+    font-weight: bold;
+    border-radius: 8em;
+    padding: 0.6em 0.8em;
+}
+
+input:focus, input:focus:hover {
+    outline: none;
+    border-color: var(--orange);
+}
+
+input:focus::placeholder, input:focus:hover::placeholder {
+    color: var(--white);
+}
+
+::placeholder {
+    color: var(--lightGrey);
+    transition: 100ms;
+}
+
+input:hover,
+input:-webkit-autofill:hover,
+textarea:-webkit-autofill:hover,
+select:-webkit-autofill:hover,
+button:hover {
+    border-color: var(--lightGrey);
+}
+
+button:active {
+    background-color: var(--orange);
+    border-color: var(--orange);
+}
+
+::selection {
+    background-color: #1c110a;
+    color: var(--orange);
+}

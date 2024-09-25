@@ -1,0 +1,31 @@
+.admin-footer {
+    background: linear-gradient(to bottom, var(--lightGrey), transparent);
+    color: var(--white); /* Colore testo chiaro per contrasto */
+    text-align: center;
+    padding: 0.1em 0; /* Spaziatura interna per renderlo più ampio */
+    font-size: 85%; /* Dimensione testo */
+}
+
+.admin-footer a {
+    color: var(--orange); /* Colore dei link */
+    text-decoration: none; /* Rimuove la sottolineatura */
+    margin: 0 0.1em;
+}
+
+.admin-footer a:hover {
+    color: var(--orange); /* Colore dei link al passaggio del mouse */
+    text-decoration: underline; /* Aggiunge la sottolineatura al passaggio del mouse */
+}
+
+.admin-footer p {
+    margin: 0.1em 0; /* Spaziatura tra i paragrafi */
+}
+
+.admin-footer p:last-child {
+    margin-top: 0.2em; /* Aggiunge un po' di spazio extra sopra i link social */
+}
+
+.admin-footer a:hover {
+    color: var(--orange); /* Cambia colore al passaggio del mouse */
+    text-decoration: underline;
+}
