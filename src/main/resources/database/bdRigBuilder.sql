@@ -6,8 +6,11 @@ USE rigbuilder;
 create table Administrator(
 	id int NOT NULL AUTO_INCREMENT primary key,
     email char(30) not null,
-    password char(30) not null
+    pwd char(40) not null
 );
+
+insert into Administrator values
+(1, "giovannibonal@gmail.com", "9af535ac528d26f4cb8e8429b00652e18c7b8c1d");
 
 #CPU(id, name, rating, price, shop_URL, image_URL, TDP, socket, RAM_type, core, thread, clock_base, clock_boost, cache, scale, generation)
 create table Processor(

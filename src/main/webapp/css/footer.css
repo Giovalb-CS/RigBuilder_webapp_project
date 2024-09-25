@@ -4,6 +4,7 @@
     text-align: center;
     padding: 0.1em 0; /* Spaziatura interna per renderlo più ampio */
     font-size: 85%; /* Dimensione testo */
+    margin-top: 2em;
 }
 
 .admin-footer a {
