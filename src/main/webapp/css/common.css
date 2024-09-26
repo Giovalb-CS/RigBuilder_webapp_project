@@ -34,7 +34,7 @@ select:-webkit-autofill:focus {
 
 body {
     background-color: var(--darkGrey);
-    margin: 0;
+    margin: 6em 0 0 0;
 }
 
 input, button {
@@ -72,12 +72,11 @@ input:focus::placeholder, input:focus:hover::placeholder {
 input:hover,
 input:-webkit-autofill:hover,
 textarea:-webkit-autofill:hover,
-select:-webkit-autofill:hover,
-button:hover {
+select:-webkit-autofill:hover {
     border-color: var(--lightGrey);
 }
 
-button:active {
+button:active, button:hover {
     background-color: var(--orange);
     border-color: var(--orange);
 }

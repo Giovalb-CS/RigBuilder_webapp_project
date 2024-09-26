@@ -3,18 +3,9 @@ package model;
 import java.sql.*;
 
 public class AdministratorDAO {
-
-    private static final Connection connection;
-    static {
-        try {
-            connection = ConPool.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Administrator doRetrieveByEmailPassword(String email, String password) {
         try {
+            Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM administrator WHERE email = ? AND pwd = SHA1(?)");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -36,6 +27,7 @@ public class AdministratorDAO {
 
     public Administrator doRetrieveByEmail(String email) {
         try {
+            Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM administrator WHERE email = ?");
             preparedStatement.setString(1, email);
 
@@ -57,6 +49,7 @@ public class AdministratorDAO {
     public boolean doSave(Administrator administrator) {
         int b;
         try {
+            Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO administrator(email, pwd) VALUES(?, SHA1(?))", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, administrator.getEmail());
             preparedStatement.setString(2, administrator.getPwd());
@@ -74,6 +67,7 @@ public class AdministratorDAO {
 
     public void doModifyPassword(Administrator administrator, String newPassword) {
         try {
+            Connection connection = ConPool.getConnection();
             if (newPassword == null || newPassword.isEmpty()) {
                 newPassword = administrator.getPwd();
             }

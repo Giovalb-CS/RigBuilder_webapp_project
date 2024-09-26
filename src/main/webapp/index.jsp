@@ -13,6 +13,18 @@
     </head>
 
     <body>
+        <%if (session.getAttribute("administrator") != null){response.sendRedirect("dashboard");}%>
+        <%if (request.getParameter("loginFailed") != null){%>
+        <%
+            int loginFailed = Integer.parseInt(request.getParameter("loginFailed"));
+            if(loginFailed == 1){%>
+                <div class="messageContainer">
+                    <h3>Wrong username or password, please try again.</h3>
+                </div>
+            <%}%>
+        <%}%>
+
+
         <div class="top-container">
             <div class="image-container">
                 <img src="${pageContext.request.contextPath}/images/RigBuilder_Logo.png" alt="Logo">
