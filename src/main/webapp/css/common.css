@@ -79,6 +79,7 @@ select:-webkit-autofill:hover {
 button:active, button:hover {
     background-color: var(--orange);
     border-color: var(--orange);
+    cursor: pointer;
 }
 
 ::selection {

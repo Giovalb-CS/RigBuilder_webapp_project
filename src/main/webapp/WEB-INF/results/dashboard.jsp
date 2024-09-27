@@ -15,11 +15,47 @@
     <body>
         <%@include file="/WEB-INF/results/modules/navbar.jsp"%>
 
+        <form class="categories">
+            <button class="cat-cpu" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/cpu.png" alt="cpu">
+                <p>CPUs</p>
+            </button>
 
+            <button class="cat-gpu" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/gpu.png" alt="gpu">
+                <p>GPUs</p>
+            </button>
 
+            <button class="cat-ram" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/ram.png" alt="ram">
+                <p>RAMs</p>
+            </button>
 
+            <button class="cat-ssd" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/ssd.png" alt="ssd">
+                <p>SSDs</p>
+            </button>
 
+            <button class="cat-mobo" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/motherboard.png" alt="motherboard">
+                <p>MOBOs</p>
+            </button>
 
+            <button class="cat-cooler" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/cooler.png" alt="cooler">
+                <p>Coolers</p>
+            </button>
+
+            <button class="cat-psu" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/psu.png" alt="psu">
+                <p>PSUs</p>
+            </button>
+
+            <button class="cat-casebox" type="submit" formaction="" formmethod="post">
+                <img src="${pageContext.request.contextPath}/images/pc-parts-icons/casebox.png" alt="casebox">
+                <p>Cases</p>
+            </button>
+        </form>
 
         <%@include file="/WEB-INF/results/modules/footer.jsp"%>
     </body>

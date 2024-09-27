@@ -2,6 +2,14 @@ body {
     margin: 0;
 }
 
+.admin-footer {
+    position: fixed;
+    bottom: 0.5em;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
 .top-container {
     display: flex;
     justify-content: center;
