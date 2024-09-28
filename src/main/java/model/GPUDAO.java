@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -394,7 +391,7 @@ public class GPUDAO {
     public void doSave(GPU gpu) {
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into gpu (name, rating, price, shop_url, image_url, tdp, memory, memory_clock, core_clock, boost_clock, lenght, slot_width, power_cable) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gpu (name, rating, price, shop_url, image_url, tdp, memory, memory_clock, core_clock, boost_clock, lenght, slot_width, power_cable) values (?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, gpu.getName());
             preparedStatement.setDouble(2, gpu.getRating());
             preparedStatement.setDouble(3, gpu.getPrice());
@@ -410,6 +407,9 @@ public class GPUDAO {
             preparedStatement.setString(13, gpu.getPower_cable());
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            gpu.setId(resultSet.getInt("id"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -434,6 +434,7 @@ public class GPUDAO {
             preparedStatement.setInt(11, gpu.getLenght());
             preparedStatement.setInt(12, gpu.getSlot_width());
             preparedStatement.setString(13, gpu.getPower_cable());
+            preparedStatement.setInt(14, gpu.getId());
 
             if (preparedStatement.executeUpdate() != 1) throw new RuntimeException("UPDATE error.");
         } catch (SQLException e) {

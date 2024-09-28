@@ -1,11 +1,8 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.ResultSet;
 
 public class CoolerDAO {
     public Cooler doRetrieveByID(int id) {
@@ -277,8 +274,8 @@ public class CoolerDAO {
         List<Cooler> coolers = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE socket=?");
-            preparedStatement.setString(1, socketType);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE socket LIKE ?");
+            preparedStatement.setString(1, "%" + socketType + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -389,7 +386,7 @@ public class CoolerDAO {
                 query.append(" AND radiator_size >= ?");
             }
             if (socket != null && !socket.isEmpty()) {
-                query.append(" AND socket = ?");
+                query.append(" AND socket LIKE ?");
             }
 
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -415,7 +412,7 @@ public class CoolerDAO {
                 preparedStatement.setInt(paramIndex++, minRadiatorSize);
             }
             if (socket != null && !socket.isEmpty()) {
-                preparedStatement.setString(paramIndex++, socket);
+                preparedStatement.setString(paramIndex++, "%" + socket + "%");
             }
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -445,7 +442,7 @@ public class CoolerDAO {
     public void doSave(Cooler cooler) {
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Cooler (name, rating, price, shop_url, image_url, tdp, socket, rpm, noise_level, radiator_size, cooler_height) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Cooler (name, rating, price, shop_url, image_url, tdp, socket, rpm, noise_level, radiator_size, cooler_height) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, cooler.getName());
             preparedStatement.setDouble(2, cooler.getRating());
             preparedStatement.setDouble(3, cooler.getPrice());
@@ -458,6 +455,9 @@ public class CoolerDAO {
             preparedStatement.setInt(10, cooler.getRadiator_size());
             preparedStatement.setInt(11, cooler.getCooler_height());
             if (preparedStatement.executeUpdate() != 1) throw new RuntimeException("INSERT error.");
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            cooler.setId(resultSet.getInt("id"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

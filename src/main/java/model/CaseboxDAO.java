@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -561,7 +558,7 @@ public class CaseboxDAO {
     public void doSave(Casebox casebox) {
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into casebox (name, rating, price, shop_url, image_url, max_cooler_height, radiator_size, gpu_lenght, form_factor, psu_lenght, pcie_slots) values (?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into casebox (name, rating, price, shop_url, image_url, max_cooler_height, radiator_size, gpu_lenght, form_factor, psu_lenght, pcie_slots) values (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, casebox.getName());
             preparedStatement.setDouble(2, casebox.getRating());
             preparedStatement.setDouble(3, casebox.getPrice());
@@ -575,6 +572,9 @@ public class CaseboxDAO {
             preparedStatement.setInt(11, casebox.getPcie_slots());
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            casebox.setId(resultSet.getInt("id"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
