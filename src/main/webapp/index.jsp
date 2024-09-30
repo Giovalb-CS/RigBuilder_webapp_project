@@ -22,6 +22,14 @@
                     <h3>Wrong username or password, please try again.</h3>
                 </div>
             <%}%>
+        <%} if (request.getParameter("notLoggedIn") != null){%>
+        <%
+            int notLoggedIn = Integer.parseInt(request.getParameter("notLoggedIn"));
+            if(notLoggedIn == 1){%>
+                <div class="messageContainer">
+                    <h3>You have to log in in order to proceed.</h3>
+                </div>
+        <%}%>
         <%}%>
 
 

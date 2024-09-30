@@ -20,7 +20,7 @@ public class DashboardServlet extends HttpServlet {
             rd.forward(req, resp);
         }
         else {
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index.jsp?notLoggedIn=1");
         }
     }
 

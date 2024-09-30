@@ -13,10 +13,11 @@
     </head>
 
     <body>
+        <%@include file="/WEB-INF/results/modules/isAdminLogged.jsp"%>
         <%@include file="/WEB-INF/results/modules/navbar.jsp"%>
 
         <form class="categories">
-            <button class="cat-cpu" type="submit" formaction="" formmethod="post">
+            <button class="cat-cpu" type="submit" formaction="processors" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/cpu.png" alt="cpu">
                 <p>CPUs</p>
             </button>
