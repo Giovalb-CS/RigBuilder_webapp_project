@@ -34,11 +34,12 @@ public class PSUDAO {
         return null;
     }
 
-    public PSU doRetrieveByName(String name) {
+    public List<PSU> doRetrieveByName(String name) {
         try {
+            List<PSU> psuList = new ArrayList<PSU>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from psu where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from psu where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -55,12 +56,12 @@ public class PSUDAO {
                 psu.setEfficiency(resultSet.getString("efficiency"));
                 psu.setWattage(resultSet.getInt("wattage"));
                 psu.setLenght(resultSet.getInt("lenght"));
-                return psu;
+                psuList.add(psu);
             }
+            return psuList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<PSU> doRetrieveAll() {

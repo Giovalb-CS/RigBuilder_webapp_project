@@ -37,11 +37,12 @@ public class GPUDAO {
         return null;
     }
 
-    public GPU doRetrieveByName(String name) {
+    public List<GPU> doRetrieveByName(String name) {
         try {
+            List<GPU> gpuList = new ArrayList<GPU>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from gpu where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from gpu where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -61,12 +62,12 @@ public class GPUDAO {
                 gpu.setLenght(resultSet.getInt("lenght"));
                 gpu.setSlot_width(resultSet.getInt("slot_width"));
                 gpu.setPower_cable(resultSet.getString("power_cable"));
-                return gpu;
+                gpuList.add(gpu);
             }
+            return gpuList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<GPU> doRetrieveAll() {

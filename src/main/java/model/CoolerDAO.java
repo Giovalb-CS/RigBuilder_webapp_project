@@ -34,16 +34,16 @@ public class CoolerDAO {
         return cooler;
     }
 
-    public Cooler doRetrieveByName(String name) {
-        Cooler cooler = null;
+    public List<Cooler> doRetrieveByName(String name) {
         try {
+            List<Cooler> coolers = new ArrayList<>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                cooler = new Cooler();
+                Cooler cooler = new Cooler();
                 cooler.setId(resultSet.getInt("id"));
                 cooler.setName(resultSet.getString("name"));
                 cooler.setRating(resultSet.getDouble("rating"));
@@ -56,11 +56,12 @@ public class CoolerDAO {
                 cooler.setNoise_level(resultSet.getInt("noise_level"));
                 cooler.setRadiator_size(resultSet.getInt("radiator_size"));
                 cooler.setCooler_height(resultSet.getInt("cooler_height"));
+                coolers.add(cooler);
             }
+            return coolers;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return cooler;
     }
 
     public List<Cooler> doRetrieveAll() {

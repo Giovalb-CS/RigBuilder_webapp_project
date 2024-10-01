@@ -1,11 +1,15 @@
 <%@ page import="model.Processor" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String fileName = request.getServletPath().substring(request.getServletPath().lastIndexOf("/")+1).substring(0, request.getServletPath().substring(request.getServletPath().lastIndexOf("/")+1).lastIndexOf("."));
+    String fileNameCapitalized = fileName.substring(0, 1).toUpperCase() + fileName.substring(1).toLowerCase();
+%>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Processors - RigBuilder</title>
+        <title><%=fileNameCapitalized%> - RigBuilder</title>
         <link rel="icon" href="${pageContext.request.contextPath}/images/RigBuilder_site_watermark.png" type="image/x-icon">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" type="text/css">
@@ -20,12 +24,15 @@
 
         <%ArrayList<Processor> processors = (ArrayList<Processor>) request.getAttribute("processors");%>
 
+        <form class="add-button-container">
+            <button type="submit" formmethod="post" formaction=""><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add <%=fileName.substring(0, fileName.length()-1)%></button>
+        </form>
+
         <%if (processors.isEmpty() || processors == null){%>
             <div class="no-items-container">
-                <p>No processors found in the database. Add some.</p>
+                <p>No <%=fileName%> found in the database. Add some.</p>
             </div>
         <%} else {%>
-
             <div class="filter-container"></div>
 
             <div class="list-container">
@@ -109,7 +116,6 @@
                     </div>
                 <%}%>
             </div>
-
         <%}%>
 
         <%@include file="/WEB-INF/results/modules/footer.jsp"%>

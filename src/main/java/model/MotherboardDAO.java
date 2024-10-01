@@ -43,11 +43,12 @@ public class MotherboardDAO {
         return null;
     }
 
-    public Motherboard doRetrieveByName(String name) {
+    public List<Motherboard> doRetrieveByName(String name) {
         try {
+            List<Motherboard> motherboardList = new ArrayList<Motherboard>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from motherboard where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from motherboard where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -73,12 +74,12 @@ public class MotherboardDAO {
                 motherboard.setLan(resultSet.getString("lan"));
                 motherboard.setWifi(resultSet.getString("wifi"));
                 motherboard.setForm_factor(resultSet.getString("form_factor"));
-                return motherboard;
+                motherboardList.add(motherboard);
             }
+            return motherboardList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Motherboard> doRetrieveAll() {

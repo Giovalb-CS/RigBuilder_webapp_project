@@ -34,11 +34,12 @@ public class SSDDAO {
         return null;
     }
 
-    public SSD doRetrieveByName(String name) {
+    public List<SSD> doRetrieveByName(String name) {
         try {
+            List<SSD> ssdList = new ArrayList<SSD>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from ssd where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from ssd where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -55,12 +56,12 @@ public class SSDDAO {
                 ssd.setCapacity(resultSet.getString("capacity"));
                 ssd.setSpeed_read(resultSet.getInt("speed_read"));
                 ssd.setSpeed_write(resultSet.getInt("speed_write"));
-                return ssd;
+                ssdList.add(ssd);
             }
+            return ssdList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<SSD> doRetrieveAll() {

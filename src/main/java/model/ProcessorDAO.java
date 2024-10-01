@@ -39,11 +39,12 @@ public class ProcessorDAO {
         return null;
     }
 
-    public Processor doRetrieveByName(String name) {
+    public List<Processor> doRetrieveByName(String name) {
         try {
+            List<Processor> processorList = new ArrayList<Processor>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from processor where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from processor where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -65,12 +66,12 @@ public class ProcessorDAO {
                 processor.setCache(resultSet.getInt("cache"));
                 processor.setScale(resultSet.getInt("scale"));
                 processor.setGeneration(resultSet.getString("generation"));
-                return processor;
+                processorList.add(processor);
             }
+            return processorList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Processor> doRetrieveAll() {

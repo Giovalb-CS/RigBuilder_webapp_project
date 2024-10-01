@@ -29,8 +29,21 @@ create table Processor(
     clock_boost double not null,
     cache int not null,
     scale int not null,
-    generation varchar(20) not null
+    generation varchar(40) not null
 );
+insert into processor values
+(1,
+"AMD Processore Ryzen 7 7800X3D, Tecnologia 3D VCache, 8 Core/16 Thread senza Limiti, Architettura Zen 4, 104 M di Cache, 120 W di TDP, AMD Socket 5, DDR5 e PCIe 5.0",
+4.8, 427,
+"https://www.amazon.it/AMD-Processore-Ryzen-7800X3D-Architettura/dp/B0BTZB7F88/ref=sr_1_1?crid=M28COSZK1X13&dib=eyJ2IjoiMSJ9.eMhG2ZqLZV2WsnDgng90ytFZEGEz2o8uSzvHjBTQnMGDF63W74rahFsHvBp7qiNAX98_wa45oxHkVuxLtiiMePTtV-dM-GJj6lilrTFng8UaDylRTJN6XK80rce2iX1okU0XTYpIy7NNXsdnj7HrzMnp4bGPdeeCUt61sVh6Ilnrv2HqwTm8qK6Fn99IwRgNWIbmpLZ8Ddv31R08r87hA1ZCs-kyLVw5FdXkRV42ieF1fblGipI-aC41gIzAm1HZ03snhdFq96JTzNFMNu9GKBYaPGh0kw7HEr1JQOf147U.LteEJpRb6dSTwxOZ4wYYZ4hMOZYFI-1dhD3vEhynYp0&dib_tag=se&keywords=amd+ryzen+7+7800x3d&qid=1727721110&sprefix=amd%2Caps%2C140&sr=8-1&ufe=app_do%3Aamzn1.fos.9d4f9b77-768c-4a4e-94ad-33674c20ab35",
+"https://m.media-amazon.com/images/I/51HqC0rU9HL._AC_SX355_.jpg",
+120, "AM5", "DDR5", 8, 16, 4.2, 5, 104, 5, "AMD Zen 4"),
+(2,
+"Intel® Core™ i9 Processore per sistemi desktop 14900K 24 core (8 P-core + 16 E-core) fino a 6,0 GHz",
+4.4, 506,
+"https://www.amazon.it/Intel%C2%AE-CoreTM-Processore-sistemi-desktop/dp/B0CHBJGFBC/ref=sr_1_1?crid=20H37T7YTJ8S9&dib=eyJ2IjoiMSJ9.BYciJEW51u9vhyxR4cuYPRce7cic_fccJ3IhcKTVNlDEeB6MuX_hYXxHRhYBKoRtnX2Sk35azwLdNbb8-WlXNINBxmED62nWvh8du3ZkDhurasoPiR9tKB9N13ec2QF5eG_bh3WtWJLG6XEI2NMn6VwgeQEH-f9ysZh_GEmyV3H5PKu15aGiXfewT6kzmjG3r1RHMM2Xva4x8m4VsqXU3FffH7mG3SfLIfP4_4WZv4g5oFgJT_C5HUrHGZA5k0E8FtrDbFo7XTqFW5F9iprIairoKDkA4WrxqbSMYJISBSg.ZAscuzbeiHeP22Oa0uvS8_aFxCpWsJWL3u2jcLOOxkM&dib_tag=se&keywords=intel+i9+14900k%2B&qid=1727721120&sprefix=intel+i9%2Caps%2C154&sr=8-1&ufe=app_do%3Aamzn1.fos.9d4f9b77-768c-4a4e-94ad-33674c20ab35",
+"https://m.media-amazon.com/images/I/31AnDDm99fL._AC_.jpg",
+125, "LGA 1700", "DDR5", 24, 32, 3.2, 5.8, 36, 10, "Intel Raptor Lake Refresh");
 
 #GPU(id, name, rating, price, shop_URL, image_URL, TDP, memory, memory_clock, core_clock, boost_clock, lenght, slot_width, power_cable)
 create table GPU(

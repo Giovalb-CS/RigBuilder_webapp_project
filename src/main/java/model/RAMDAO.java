@@ -32,11 +32,12 @@ public class RAMDAO {
         return null;
     }
 
-    public RAM doRetrieveByName(String name) {
+    public List<RAM> doRetrieveByName(String name) {
         try {
+            List<RAM> ramList = new ArrayList<RAM>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from ram where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from ram where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -51,12 +52,12 @@ public class RAMDAO {
                 ram.setTdp(resultSet.getInt("tdp"));
                 ram.setType(resultSet.getString("type"));
                 ram.setClock(resultSet.getInt("clock"));
-                return ram;
+                ramList.add(ram);
             }
+            return ramList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<RAM> doRetrieveAll() {

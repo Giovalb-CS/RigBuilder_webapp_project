@@ -35,11 +35,12 @@ public class CaseboxDAO {
         return null;
     }
 
-    public Casebox doRetrieveByName(String name) {
+    public List<Casebox> doRetrieveByName(String name) {
         try {
+            List<Casebox> caseboxList = new ArrayList<Casebox>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where name=?");
-            preparedStatement.setString(1, name);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where name like ?");
+            preparedStatement.setString(1, "%" + name + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -57,12 +58,12 @@ public class CaseboxDAO {
                 casebox.setForm_factor(resultSet.getString("form_factor"));
                 casebox.setPsu_lenght(resultSet.getInt("psu_lenght"));
                 casebox.setPcie_slots(resultSet.getInt("pcie_slots"));
-                return casebox;
+                caseboxList.add(casebox);
             }
+            return caseboxList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Casebox> doRetrieveAll() {
