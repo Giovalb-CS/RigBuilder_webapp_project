@@ -37,7 +37,7 @@ body {
     margin: 6em 0 0 0;
 }
 
-input, button {
+input, button, select {
     background-color: transparent;
     border-radius: 0.6em;
     border-width: thin;
@@ -55,12 +55,16 @@ button {
     padding: 0.6em 0.8em;
 }
 
-input:focus, input:focus:hover {
+select option {
+    background-color: var(--darkGrey);
+}
+
+input:focus, input:focus:hover, select:focus, select:focus:hover {
     outline: none;
     border-color: var(--orange);
 }
 
-input:focus::placeholder, input:focus:hover::placeholder {
+input:focus::placeholder, input:focus:hover::placeholder, select:focus::placeholder, select:focus:hover::placeholder {
     color: var(--white);
 }
 

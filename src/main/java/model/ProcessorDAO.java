@@ -52,7 +52,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -85,7 +85,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -118,7 +118,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -151,7 +151,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -186,7 +186,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -219,7 +219,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -252,7 +252,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -287,7 +287,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -321,7 +321,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -355,7 +355,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -377,7 +377,7 @@ public class ProcessorDAO {
         }
     }
 
-    public List<Processor> doRetrieveFiltered(Double minPrice, Double maxPrice, String socket, String ramType, Integer minRating, Integer maxRating) {
+    public List<Processor> doRetrieveFiltered(Double minPrice, Double maxPrice, String socket, String ramType, Double minRating, Double maxRating) {
         try {
             List<Processor> processorList = new ArrayList<>();
             Connection connection = ConPool.getConnection();
@@ -391,10 +391,10 @@ public class ProcessorDAO {
             if (maxPrice != null) {
                 query.append(" AND price <= ?");
             }
-            if (socket != null) {
+            if (socket != null && !socket.isEmpty()) {
                 query.append(" AND socket = ?");
             }
-            if (ramType != null) {
+            if (ramType != null && !ramType.isEmpty()) {
                 query.append(" AND ram_type = ?");
             }
             if (minRating != null) {
@@ -421,10 +421,10 @@ public class ProcessorDAO {
                 preparedStatement.setString(paramIndex++, ramType);
             }
             if (minRating != null) {
-                preparedStatement.setInt(paramIndex++, minRating);
+                preparedStatement.setDouble(paramIndex++, minRating);
             }
             if (maxRating != null) {
-                preparedStatement.setInt(paramIndex++, maxRating);
+                preparedStatement.setDouble(paramIndex++, maxRating);
             }
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -434,7 +434,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));
@@ -526,4 +526,35 @@ public class ProcessorDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public List<String> doRetrieveDistinctSockets() {
+        List<String> sockets = new ArrayList<>();
+        String sql = "SELECT DISTINCT socket FROM processor";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sockets.add(rs.getString("socket"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sockets;
+    }
+
+    public List<String> doRetrieveDistinctRamTypes() {
+        List<String> ramTypes = new ArrayList<>();
+        String sql = "SELECT DISTINCT ram_type FROM processor";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ramTypes.add(rs.getString("ram_type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ramTypes;
+    }
+
 }
