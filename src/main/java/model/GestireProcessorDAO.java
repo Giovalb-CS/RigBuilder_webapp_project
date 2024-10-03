@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +40,19 @@ public class GestireProcessorDAO {
                 gestireCaseboxList.add(gestireProcessor);
             }
             return gestireCaseboxList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doSave(GestireProcessor gestireProcessor) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestireprocessor (idAdmin, idProcessor) values (?,?)");
+            preparedStatement.setInt(1, gestireProcessor.getIdAdmin());
+            preparedStatement.setInt(2, gestireProcessor.getIdProcessor());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

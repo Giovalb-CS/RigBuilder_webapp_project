@@ -1,0 +1,80 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    border: 0.1em rgba(255, 255, 255, 0.18) solid;
+    border-radius: 1em;
+    box-shadow: 0.2em 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.19);
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.img-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.img-container img {
+    width: 8em;
+    height: 8em;
+    object-fit: cover;
+    margin-right: 1em;
+    border-radius: 0.8em;
+    border: 0.1em rgba(255, 255, 255, 0.18) solid;
+}
+
+.img-container textarea {
+    flex-grow: 1;
+    height: 8em;
+    resize: none;
+    padding: 0.5em;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.input-container label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.input-container input,
+.input-container textarea,
+.input-container select {
+    padding: 0.5em;
+    font-size: 1em;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 1.5em;
+    }
+
+    .img-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .img-container img {
+        margin-bottom: 1em;
+        margin-right: 0;
+    }
+
+    .img-container textarea {
+        height: 6em;
+        width: 100%;
+    }
+}

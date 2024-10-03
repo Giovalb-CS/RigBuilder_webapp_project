@@ -457,7 +457,7 @@ public class ProcessorDAO {
         }
     }
 
-    public void doSave(Processor processor) {
+    public int doSave(Processor processor) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into processor (name, rating, price, shop_url, image_url, tdp, socket, ram_type, core, thread, clock_base, clock_boost, cache, scale, generation) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -479,8 +479,13 @@ public class ProcessorDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            processor.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                processor.setId(generatedId);
+                return generatedId; // Restituisci l'ID generato
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

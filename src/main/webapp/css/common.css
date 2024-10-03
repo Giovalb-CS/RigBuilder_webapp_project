@@ -37,7 +37,7 @@ body {
     margin: 6em 0 0 0;
 }
 
-input, button, select {
+input, button, select, textarea {
     background-color: transparent;
     border-radius: 0.6em;
     border-width: thin;
@@ -47,6 +47,10 @@ input, button, select {
     transition: 100ms;
     border-color: var(--grey);
     border-style: solid;
+}
+
+textarea {
+    transition: none;
 }
 
 button {
@@ -59,12 +63,12 @@ select option {
     background-color: var(--darkGrey);
 }
 
-input:focus, input:focus:hover, select:focus, select:focus:hover {
+input:focus, input:focus:hover, select:focus, select:focus:hover, textarea:focus, textarea:focus:hover {
     outline: none;
     border-color: var(--orange);
 }
 
-input:focus::placeholder, input:focus:hover::placeholder, select:focus::placeholder, select:focus:hover::placeholder {
+input:focus::placeholder, input:focus:hover::placeholder, select:focus::placeholder, select:focus:hover::placeholder, textarea:focus::placeholder, textarea:focus:hover::placeholder {
     color: var(--white);
 }
 

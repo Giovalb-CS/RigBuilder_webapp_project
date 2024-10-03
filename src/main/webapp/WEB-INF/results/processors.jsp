@@ -28,7 +28,7 @@
         <%ArrayList<Processor> processors = (ArrayList<Processor>) request.getAttribute("processors");%>
 
         <form class="add-button-container">
-            <button type="submit" formmethod="post" formaction=""><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add <%=fileName.substring(0, fileName.length()-1)%></button>
+            <button type="submit" formmethod="get" formaction="addProcessor"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add <%=fileName.substring(0, fileName.length()-1)%></button>
         </form>
 
         <%if (processors == null || processors.isEmpty()){%>
