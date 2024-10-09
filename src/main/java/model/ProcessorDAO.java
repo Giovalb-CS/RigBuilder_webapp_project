@@ -17,7 +17,7 @@ public class ProcessorDAO {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));
-                processor.setRating(resultSet.getInt("rating"));
+                processor.setRating(resultSet.getDouble("rating"));
                 processor.setPrice(resultSet.getDouble("price"));
                 processor.setShop_URL(resultSet.getString("shop_URL"));
                 processor.setImage_URL(resultSet.getString("image_URL"));

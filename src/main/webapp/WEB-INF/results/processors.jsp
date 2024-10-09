@@ -21,15 +21,21 @@
         <script src="${pageContext.request.contextPath}/js/filterToggle.js" type="text/javascript"></script>
     </head>
 
-    <body>
+    <body id="top">
         <%@include file="/WEB-INF/results/modules/isAdminLogged.jsp"%>
         <%@include file="/WEB-INF/results/modules/navbar.jsp"%>
+        <%@include file="/WEB-INF/results/modules/backtotopbutton.jsp"%>
 
         <%ArrayList<Processor> processors = (ArrayList<Processor>) request.getAttribute("processors");%>
 
         <%if (request.getAttribute("addedSuccessfully")!=null) {%>
             <div class="messageContainer success">
                 <h3>Added successfully!</h3>
+            </div>
+        <%}%>
+        <%if (request.getAttribute("editedSuccessfully")!=null) {%>
+            <div class="messageContainer success">
+                <h3>Edited successfully!</h3>
             </div>
         <%}%>
 
@@ -237,8 +243,9 @@
                             </div>
 
                             <form class="component-buttons-container">
-                                <button type="submit" formmethod="post" formaction=""><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
-                                <button type="submit" formmethod="post" formaction=""><i class="fa fa-times-circle-o" aria-hidden="true"></i>Remove</button>
+                                <input type="hidden" name="id" value="<%=processor.getId()%>">
+                                <button type="submit" formmethod="get" formaction="editProcessor"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
+                                <button type="submit" formmethod="get" formaction=""><i class="fa fa-times-circle-o" aria-hidden="true"></i>Remove</button>
                             </form>
                         </div>
                     <%}%>

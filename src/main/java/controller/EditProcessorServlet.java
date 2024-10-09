@@ -1,14 +1,16 @@
 package controller;
+
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.*;
+import model.Processor;
+import model.ProcessorDAO;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AddProcessorServlet", value = "/addProcessor")
-public class AddProcessorServlet extends HttpServlet {
+@WebServlet(name = "EditProcessorServlet", value = "/editProcessor")
+public class EditProcessorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -16,9 +18,11 @@ public class AddProcessorServlet extends HttpServlet {
             ProcessorDAO processorDao = new ProcessorDAO();
             List<String> sockets = processorDao.doRetrieveDistinctSockets();
             List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
+            Processor processor = processorDao.doRetrieveByID(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("processor", processor);
             request.setAttribute("sockets", sockets);
             request.setAttribute("ramTypes", ramTypes);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addProcessor.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/editProcessor.jsp");
             rd.forward(request, response);
         } else {
             response.sendRedirect("index.jsp?notLoggedIn=1");
@@ -29,6 +33,9 @@ public class AddProcessorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ProcessorDAO processorDao = new ProcessorDAO();
+        int id = Integer.parseInt(request.getParameter("id"));
+        Processor processor_before = processorDao.doRetrieveByID(id);
+        Processor processor_after = new Processor();
         String name = request.getParameter("name");
         String rating  = request.getParameter("rating");
         String price = request.getParameter("price");
@@ -62,52 +69,35 @@ public class AddProcessorServlet extends HttpServlet {
                 && scale!=null && !scale.isEmpty()
                 && generation!=null && !generation.isEmpty()
         ) {
-            List<Processor> processors = processorDao.doRetrieveByName(name);
-            if (processors.isEmpty()) {
-                Processor processor = new Processor();
-                processor.setName(name);
-                processor.setRating(Double.parseDouble(rating));
-                processor.setPrice(Double.parseDouble(price));
-                processor.setShop_URL(shop_URL);
-                processor.setImage_URL(image_URL);
-                processor.setTdp(Integer.parseInt(tdp));
-                processor.setSocket(socket);
-                processor.setRam_type(ramType);
-                processor.setCore(Integer.parseInt(core));
-                processor.setThread(Integer.parseInt(thread));
-                processor.setClock_base(Double.parseDouble(clock_base));
-                processor.setClock_boost(Double.parseDouble(clock_boost));
-                processor.setCache(Integer.parseInt(cache));
-                processor.setScale(Integer.parseInt(scale));
-                processor.setGeneration(generation);
+            processor_after.setId(id);
+            processor_after.setName(name);
+            processor_after.setRating(Double.parseDouble(rating));
+            processor_after.setPrice(Double.parseDouble(price));
+            processor_after.setShop_URL(shop_URL);
+            processor_after.setImage_URL(image_URL);
+            processor_after.setTdp(Integer.parseInt(tdp));
+            processor_after.setSocket(socket);
+            processor_after.setRam_type(ramType);
+            processor_after.setCore(Integer.parseInt(core));
+            processor_after.setThread(Integer.parseInt(thread));
+            processor_after.setClock_base(Double.parseDouble(clock_base));
+            processor_after.setClock_boost(Double.parseDouble(clock_boost));
+            processor_after.setCache(Integer.parseInt(cache));
+            processor_after.setScale(Integer.parseInt(scale));
+            processor_after.setGeneration(generation);
 
-                int id = processorDao.doSave(processor);
+            processorDao.doModify(processor_after);
 
-                GestireProcessor gestireProcessor = new GestireProcessor();
-                GestireProcessorDAO gestireProcessorDao = new GestireProcessorDAO();
-                Administrator administrator = (Administrator) session.getAttribute("administrator");
-                gestireProcessor.setIdProcessor(id);
-                gestireProcessor.setIdAdmin(administrator.getId());
-                gestireProcessorDao.doSave(gestireProcessor);
-
-                response.sendRedirect("processors");
-            }
-            else {
-                List<String> sockets = processorDao.doRetrieveDistinctSockets();
-                List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
-                request.setAttribute("sockets", sockets);
-                request.setAttribute("ramTypes", ramTypes);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/addProcessor.jsp?alreadyExists=1");
-                request.setAttribute("alreadyExists", 1);
-                dispatcher.forward(request, response);
-            }
+            response.sendRedirect("processors");
         }
         else {
             List<String> sockets = processorDao.doRetrieveDistinctSockets();
             List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
+            Processor processor = processorDao.doRetrieveByID(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("processor", processor);
             request.setAttribute("sockets", sockets);
             request.setAttribute("ramTypes", ramTypes);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/addProcessor.jsp?formError=1");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/editProcessor.jsp");
             request.setAttribute("formError", 1);
             dispatcher.forward(request, response);
         }

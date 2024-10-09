@@ -1,28 +1,28 @@
-$(document).ready(function() {
-    $('#image_URL').on('input', function() {
-        var imageUrl = $(this).val(); // Prende l'URL inserito nella textarea
+window.onload = function() {
+    function updateImagePreview() {
+        var imageUrl = document.getElementById('image_URL').value;
 
-        // Controlla se il campo URL non è vuoto
         if (imageUrl.trim() !== "") {
-            // Crea un nuovo oggetto immagine per il caricamento asincrono
             var img = new Image();
             img.src = imageUrl;
 
-            // Gestione del caricamento dell'immagine
             img.onload = function() {
-                // Se l'immagine è valida, cambia l'attributo src dell'immagine nel form
-                $('#preview-image').attr('src', imageUrl);
+                document.getElementById('preview-image').src = imageUrl;
+                document.getElementById('preview-image').style.display = "block";
             };
 
-            // Gestione dell'errore (se l'URL non è valido o l'immagine non esiste)
             img.onerror = function() {
-                // Imposta un'immagine di fallback o lascia vuoto
-                $('#preview-image').attr('src', '');
+                document.getElementById('preview-image').src = '';
                 alert("Impossibile caricare l'immagine. Verifica l'URL inserito.");
             };
         } else {
             // Se il campo è vuoto, rimuove l'immagine dal preview
-            $('#preview-image').attr('src', '');
+            document.getElementById('preview-image').src = '';
+            document.getElementById('preview-image').style.display = "none";
         }
-    });
-});
+    }
+
+    updateImagePreview();
+
+    document.getElementById('image_URL').addEventListener('input', updateImagePreview);
+};
