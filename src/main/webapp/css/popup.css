@@ -1,0 +1,35 @@
+.popup {
+    display: none; /* Nasconde il popup per impostazione predefinita */
+    position: fixed; /* Fissa la posizione del popup */
+    top: 0; /* Posizione verticale superiore */
+    left: 0; /* Posizione orizzontale sinistra */
+    width: 100%; /* Larghezza del 100% */
+    height: 100%; /* Altezza del 100% */
+    background-color: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 900; /* Assicura che il popup sia sopra altri elementi */
+}
+
+.popup-content {
+    position: absolute; /* Posizionamento assoluto per il contenuto del popup */
+    top: 50%; /* Centrato verticalmente */
+    left: 50%; /* Centrato orizzontalmente */
+    transform: translate(-50%, -50%); /* Traslazione per centrare completamente */
+    padding: 3em; /* Spaziatura interna */
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 0.1em rgba(255, 255, 255, 0.18) solid;
+    border-radius: 1em;
+    z-index: 1000;
+}
+
+.popup-content h2 {
+    margin-bottom: 20px; /* Margine sotto l'intestazione */
+}
+
+.popup-content button {
+    margin-right: 10px; /* Margine a destra tra i pulsanti */
+}

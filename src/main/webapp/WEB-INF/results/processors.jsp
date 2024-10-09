@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/component-list.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/popup.css" type="text/css">
         <script src="https://kit.fontawesome.com/8488ba2065.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/filterToggle.js" type="text/javascript"></script>
@@ -169,87 +170,101 @@
             </div>
 
             <div class="list-container">
-                    <%for (Processor processor : processors){%>
-                        <div class="component">
-                            <img src="<%=processor.getImage_URL()%>" alt="<%=processor.getName()%>">
+                <%for (Processor processor : processors){%>
+                    <div class="component">
+                        <img src="<%=processor.getImage_URL()%>" alt="<%=processor.getName()%>">
 
-                            <div class="component-info-container">
-                                <%
-                                  String componentName = processor.getName();
-                                  if (componentName.length() > 60) {
-                                    componentName = componentName.substring(0, 57) + "...";
-                                  }
-                                %>
-                                <div class="group-container name-container">
-                                    <p class="group-label">Name</p>
-                                    <p class="group-content"><%=componentName%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">ID</p>
-                                    <p class="group-content"><%=processor.getId()%></p>
-                                </div>
-                                <div class="group-container rating-container">
-                                    <p class="group-label">Rating</p>
-                                    <p class="group-content"><i class="fa fa-star" aria-hidden="true"></i><%=processor.getRating()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Price</p>
-                                    <p class="group-content">€<%=processor.getPrice()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Shop URL</p>
-                                    <a href="<%=processor.getShop_URL()%>"><p class="group-content">Link</p></a>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">TDP</p>
-                                    <p class="group-content"><%=processor.getTdp()%>W</p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Socket</p>
-                                    <p class="group-content"><%=processor.getSocket()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Ram Type</p>
-                                    <p class="group-content"><%=processor.getRam_type()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Core Count</p>
-                                    <p class="group-content"><%=processor.getCore()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Threads</p>
-                                    <p class="group-content"><%=processor.getThread()%></p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Base Clock</p>
-                                    <p class="group-content"><%=processor.getClock_base()%>GHz</p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Boost Clock</p>
-                                    <p class="group-content"><%=processor.getClock_boost()%>GHz</p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Cache</p>
-                                    <p class="group-content"><%=processor.getCache()%>MB</p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Scale</p>
-                                    <p class="group-content"><%=processor.getScale()%>nm</p>
-                                </div>
-                                <div class="group-container">
-                                    <p class="group-label">Generation</p>
-                                    <p class="group-content"><%=processor.getGeneration()%></p>
-                                </div>
+                        <div class="component-info-container">
+                            <%
+                              String componentName = processor.getName();
+                              if (componentName.length() > 60) {
+                                componentName = componentName.substring(0, 57) + "...";
+                              }
+                            %>
+                            <div class="group-container name-container">
+                                <p class="group-label">Name</p>
+                                <p class="group-content"><%=componentName%></p>
                             </div>
-
-                            <form class="component-buttons-container">
-                                <input type="hidden" name="id" value="<%=processor.getId()%>">
-                                <button type="submit" formmethod="get" formaction="editProcessor"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
-                                <button type="submit" formmethod="get" formaction=""><i class="fa fa-times-circle-o" aria-hidden="true"></i>Remove</button>
-                            </form>
+                            <div class="group-container">
+                                <p class="group-label">ID</p>
+                                <p class="group-content"><%=processor.getId()%></p>
+                            </div>
+                            <div class="group-container rating-container">
+                                <p class="group-label">Rating</p>
+                                <p class="group-content"><i class="fa fa-star" aria-hidden="true"></i><%=processor.getRating()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Price</p>
+                                <p class="group-content">€<%=processor.getPrice()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Shop URL</p>
+                                <a href="<%=processor.getShop_URL()%>"><p class="group-content">Link</p></a>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">TDP</p>
+                                <p class="group-content"><%=processor.getTdp()%>W</p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Socket</p>
+                                <p class="group-content"><%=processor.getSocket()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Ram Type</p>
+                                <p class="group-content"><%=processor.getRam_type()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Core Count</p>
+                                <p class="group-content"><%=processor.getCore()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Threads</p>
+                                <p class="group-content"><%=processor.getThread()%></p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Base Clock</p>
+                                <p class="group-content"><%=processor.getClock_base()%>GHz</p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Boost Clock</p>
+                                <p class="group-content"><%=processor.getClock_boost()%>GHz</p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Cache</p>
+                                <p class="group-content"><%=processor.getCache()%>MB</p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Scale</p>
+                                <p class="group-content"><%=processor.getScale()%>nm</p>
+                            </div>
+                            <div class="group-container">
+                                <p class="group-label">Generation</p>
+                                <p class="group-content"><%=processor.getGeneration()%></p>
+                            </div>
                         </div>
-                    <%}%>
+
+                        <form class="component-buttons-container">
+                            <input type="hidden" name="id" value="<%=processor.getId()%>">
+                            <button type="submit" formmethod="get" formaction="editProcessor"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
+                            <button type="button" class="remove-button" data-id="<%=processor.getId()%>" data-filename="<%=fileName%>"><i class="fa fa-times-circle-o" aria-hidden="true"></i>Remove</button>
+                        </form>
+                    </div>
+                <%}%>
+            </div>
+
+            <div id="remove-popup" class="popup">
+                <div class="popup-content">
+                    <h2></h2>
+                    <form id="remove-form" action="removeProcessor" method="post">
+                        <input type="hidden" id="remove-id" name="id" value="">
+                        <div class="popup-buttons">
+                            <button type="submit" class="popup-btn">Remove</button>
+                            <button type="button" class="popup-btn cancel-remove">Back</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <script src="${pageContext.request.contextPath}/js/removePopup.js" type="text/javascript"></script>
         <%}%>
 
         <%@include file="/WEB-INF/results/modules/footer.jsp"%>

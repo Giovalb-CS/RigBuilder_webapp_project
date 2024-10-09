@@ -97,7 +97,7 @@ public class EditProcessorServlet extends HttpServlet {
             request.setAttribute("processor", processor);
             request.setAttribute("sockets", sockets);
             request.setAttribute("ramTypes", ramTypes);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/editProcessor.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/editProcessor.jsp?formError=1");
             request.setAttribute("formError", 1);
             dispatcher.forward(request, response);
         }
