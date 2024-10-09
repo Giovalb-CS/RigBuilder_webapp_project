@@ -41,14 +41,27 @@ public class ProcessorDAO {
 
     public List<Processor> doRetrieveByName(String name) {
         try {
-            List<Processor> processorList = new ArrayList<Processor>();
+            List<Processor> processorList = new ArrayList<>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from processor where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM processor WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Processor processor = new Processor();
                 processor.setId(resultSet.getInt("id"));
                 processor.setName(resultSet.getString("name"));

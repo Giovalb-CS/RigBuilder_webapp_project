@@ -27,6 +27,12 @@
 
         <%ArrayList<Processor> processors = (ArrayList<Processor>) request.getAttribute("processors");%>
 
+        <%if (request.getAttribute("addedSuccessfully")!=null) {%>
+            <div class="messageContainer success">
+                <h3>Added successfully!</h3>
+            </div>
+        <%}%>
+
         <form class="add-button-container">
             <button type="submit" formmethod="get" formaction="addProcessor"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add <%=fileName.substring(0, fileName.length()-1)%></button>
         </form>
@@ -155,7 +161,6 @@
                     <button type="submit"><i class="fa fa-refresh" aria-hidden="true"></i>Reset</button>
                 </form>
             </div>
-
 
             <div class="list-container">
                     <%for (Processor processor : processors){%>

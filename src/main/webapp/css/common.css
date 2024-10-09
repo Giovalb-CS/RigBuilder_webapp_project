@@ -94,3 +94,30 @@ button:active, button:hover {
     background-color: #1c110a;
     color: var(--orange);
 }
+
+.messageContainer {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.messageContainer h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.failure {
+    background-color: rgba(91, 0, 0, 0.43);
+}
+
+.failure h3 {
+    color: rgb(166,39,39);
+}
+
+.success {
+    background-color: rgba(12, 91, 0, 0.43);
+}
+
+.success h3 {
+    color: rgb(39, 166, 41);
+}

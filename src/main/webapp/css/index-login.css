@@ -58,19 +58,6 @@ body {
     margin: 0.2em 0;
 }
 
-.messageContainer {
-    background-color: rgba(91, 0, 0, 0.43);
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-
-.messageContainer h3 {
-    color: rgb(166,39,39);
-    margin: 0;
-    padding: 0;
-}
-
 @media screen and (max-width: 655px) {
     .top-container {
         flex-direction: column;

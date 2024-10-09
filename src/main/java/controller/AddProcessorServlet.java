@@ -91,16 +91,25 @@ public class AddProcessorServlet extends HttpServlet {
                 gestireProcessor.setIdAdmin(administrator.getId());
                 gestireProcessorDao.doSave(gestireProcessor);
 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/processors.jsp?newProcessor=1");
-                dispatcher.forward(request, response);
+                response.sendRedirect("processors");
             }
             else {
+                List<String> sockets = processorDao.doRetrieveDistinctSockets();
+                List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
+                request.setAttribute("sockets", sockets);
+                request.setAttribute("ramTypes", ramTypes);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/addProcessor.jsp?alreadyExists=1");
+                request.setAttribute("alreadyExists", 1);
                 dispatcher.forward(request, response);
             }
         }
         else {
+            List<String> sockets = processorDao.doRetrieveDistinctSockets();
+            List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
+            request.setAttribute("sockets", sockets);
+            request.setAttribute("ramTypes", ramTypes);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/addProcessor.jsp?formError=1");
+            request.setAttribute("formError", 1);
             dispatcher.forward(request, response);
         }
     }

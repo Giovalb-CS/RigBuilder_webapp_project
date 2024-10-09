@@ -18,7 +18,7 @@
         <%
             int loginFailed = Integer.parseInt(request.getParameter("loginFailed"));
             if(loginFailed == 1){%>
-                <div class="messageContainer">
+                <div class="messageContainer failure">
                     <h3>Wrong username or password, please try again.</h3>
                 </div>
             <%}%>
@@ -26,7 +26,7 @@
         <%
             int notLoggedIn = Integer.parseInt(request.getParameter("notLoggedIn"));
             if(notLoggedIn == 1){%>
-                <div class="messageContainer">
+                <div class="messageContainer failure">
                     <h3>You have to log in in order to proceed.</h3>
                 </div>
         <%}%>
