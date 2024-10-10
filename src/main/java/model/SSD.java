@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class SSD {
     private int id;
     private String name;
@@ -102,5 +104,35 @@ public class SSD {
 
     public void setSpeed_write(int speed_write) {
         this.speed_write = speed_write;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SSD)) return false;
+        SSD ssd = (SSD) o;
+        return Double.compare(getRating(), ssd.getRating()) == 0 && Double.compare(getPrice(), ssd.getPrice()) == 0 && getTdp() == ssd.getTdp() && getSpeed_read() == ssd.getSpeed_read() && getSpeed_write() == ssd.getSpeed_write() && Objects.equals(getName(), ssd.getName()) && Objects.equals(getShop_URL(), ssd.getShop_URL()) && Objects.equals(getImage_URL(), ssd.getImage_URL()) && Objects.equals(getPcie_gen(), ssd.getPcie_gen()) && Objects.equals(getCapacity(), ssd.getCapacity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getPcie_gen(), getCapacity(), getSpeed_read(), getSpeed_write());
+    }
+
+    @Override
+    public String toString() {
+        return "SSD{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", pcie_gen='" + pcie_gen + '\'' +
+                ", capacity='" + capacity + '\'' +
+                ", speed_read=" + speed_read +
+                ", speed_write=" + speed_write +
+                '}';
     }
 }

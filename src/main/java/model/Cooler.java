@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Cooler {
     private int id;
     private String name;
@@ -111,5 +113,36 @@ public class Cooler {
 
     public void setCooler_height(int cooler_height) {
         this.cooler_height = cooler_height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cooler)) return false;
+        Cooler cooler = (Cooler) o;
+        return Double.compare(getRating(), cooler.getRating()) == 0 && Double.compare(getPrice(), cooler.getPrice()) == 0 && getTdp() == cooler.getTdp() && getRpm() == cooler.getRpm() && getNoise_level() == cooler.getNoise_level() && getRadiator_size() == cooler.getRadiator_size() && getCooler_height() == cooler.getCooler_height() && Objects.equals(getName(), cooler.getName()) && Objects.equals(getShop_URL(), cooler.getShop_URL()) && Objects.equals(getImage_URL(), cooler.getImage_URL()) && Objects.equals(getSocket(), cooler.getSocket());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getSocket(), getRpm(), getNoise_level(), getRadiator_size(), getCooler_height());
+    }
+
+    @Override
+    public String toString() {
+        return "Cooler{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", socket='" + socket + '\'' +
+                ", rpm=" + rpm +
+                ", noise_level=" + noise_level +
+                ", radiator_size=" + radiator_size +
+                ", cooler_height=" + cooler_height +
+                '}';
     }
 }

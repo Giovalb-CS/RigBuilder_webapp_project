@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Motherboard {
     private int id;
     private String name;
@@ -183,5 +185,44 @@ public class Motherboard {
 
     public void setForm_factor(String form_factor) {
         this.form_factor = form_factor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Motherboard)) return false;
+        Motherboard that = (Motherboard) o;
+        return Double.compare(getRating(), that.getRating()) == 0 && Double.compare(getPrice(), that.getPrice()) == 0 && getTdp() == that.getTdp() && getRam_max_speed() == that.getRam_max_speed() && getRam_slot() == that.getRam_slot() && getRam_max() == that.getRam_max() && getPcie_x16_slot() == that.getPcie_x16_slot() && getPcie_x1_slot() == that.getPcie_x1_slot() && getM2_slot() == that.getM2_slot() && getSata_slot() == that.getSata_slot() && Objects.equals(getName(), that.getName()) && Objects.equals(getShop_URL(), that.getShop_URL()) && Objects.equals(getImage_URL(), that.getImage_URL()) && Objects.equals(getSocket(), that.getSocket()) && Objects.equals(getChipset(), that.getChipset()) && Objects.equals(getRam_type(), that.getRam_type()) && Objects.equals(getLan(), that.getLan()) && Objects.equals(getWifi(), that.getWifi()) && Objects.equals(getForm_factor(), that.getForm_factor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getSocket(), getChipset(), getRam_type(), getRam_max_speed(), getRam_slot(), getRam_max(), getPcie_x16_slot(), getPcie_x1_slot(), getM2_slot(), getSata_slot(), getLan(), getWifi(), getForm_factor());
+    }
+
+    @Override
+    public String toString() {
+        return "Motherboard{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", socket='" + socket + '\'' +
+                ", chipset='" + chipset + '\'' +
+                ", ram_type='" + ram_type + '\'' +
+                ", ram_max_speed=" + ram_max_speed +
+                ", ram_slot=" + ram_slot +
+                ", ram_max=" + ram_max +
+                ", pcie_x16_slot=" + pcie_x16_slot +
+                ", pcie_x1_slot=" + pcie_x1_slot +
+                ", m2_slot=" + m2_slot +
+                ", sata_slot=" + sata_slot +
+                ", lan='" + lan + '\'' +
+                ", wifi='" + wifi + '\'' +
+                ", form_factor='" + form_factor + '\'' +
+                '}';
     }
 }

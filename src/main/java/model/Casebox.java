@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Casebox {
     private int id;
     private String name;
@@ -111,5 +113,36 @@ public class Casebox {
 
     public void setPcie_slots(int pcie_slots) {
         this.pcie_slots = pcie_slots;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Casebox)) return false;
+        Casebox casebox = (Casebox) o;
+        return Double.compare(getRating(), casebox.getRating()) == 0 && Double.compare(getPrice(), casebox.getPrice()) == 0 && getMax_cooler_height() == casebox.getMax_cooler_height() && getRadiator_size() == casebox.getRadiator_size() && getGpu_lenght() == casebox.getGpu_lenght() && getPsu_lenght() == casebox.getPsu_lenght() && getPcie_slots() == casebox.getPcie_slots() && Objects.equals(getName(), casebox.getName()) && Objects.equals(getShop_URL(), casebox.getShop_URL()) && Objects.equals(getImage_URL(), casebox.getImage_URL()) && Objects.equals(getForm_factor(), casebox.getForm_factor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getMax_cooler_height(), getRadiator_size(), getGpu_lenght(), getForm_factor(), getPsu_lenght(), getPcie_slots());
+    }
+
+    @Override
+    public String toString() {
+        return "Casebox{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", max_cooler_height=" + max_cooler_height +
+                ", radiator_size=" + radiator_size +
+                ", gpu_lenght=" + gpu_lenght +
+                ", form_factor='" + form_factor + '\'' +
+                ", psu_lenght=" + psu_lenght +
+                ", pcie_slots=" + pcie_slots +
+                '}';
     }
 }

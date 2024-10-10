@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Processor {
     private int id;
     private String name;
@@ -147,5 +149,40 @@ public class Processor {
 
     public void setGeneration(String generation) {
         this.generation = generation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Processor)) return false;
+        Processor processor = (Processor) o;
+        return Double.compare(getRating(), processor.getRating()) == 0 && Double.compare(getPrice(), processor.getPrice()) == 0 && getTdp() == processor.getTdp() && getCore() == processor.getCore() && getThread() == processor.getThread() && Double.compare(getClock_base(), processor.getClock_base()) == 0 && Double.compare(getClock_boost(), processor.getClock_boost()) == 0 && getCache() == processor.getCache() && getScale() == processor.getScale() && Objects.equals(getName(), processor.getName()) && Objects.equals(getShop_URL(), processor.getShop_URL()) && Objects.equals(getImage_URL(), processor.getImage_URL()) && Objects.equals(getSocket(), processor.getSocket()) && Objects.equals(getRam_type(), processor.getRam_type()) && Objects.equals(getGeneration(), processor.getGeneration());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getSocket(), getRam_type(), getCore(), getThread(), getClock_base(), getClock_boost(), getCache(), getScale(), getGeneration());
+    }
+
+    @Override
+    public String toString() {
+        return "Processor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", socket='" + socket + '\'' +
+                ", ram_type='" + ram_type + '\'' +
+                ", core=" + core +
+                ", thread=" + thread +
+                ", clock_base=" + clock_base +
+                ", clock_boost=" + clock_boost +
+                ", cache=" + cache +
+                ", scale=" + scale +
+                ", generation='" + generation + '\'' +
+                '}';
     }
 }

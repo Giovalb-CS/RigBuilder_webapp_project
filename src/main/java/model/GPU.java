@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class GPU {
     private int id;
     private String name;
@@ -129,5 +131,38 @@ public class GPU {
 
     public void setPower_cable(String power_cable) {
         this.power_cable = power_cable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GPU)) return false;
+        GPU gpu = (GPU) o;
+        return Double.compare(getRating(), gpu.getRating()) == 0 && Double.compare(getPrice(), gpu.getPrice()) == 0 && getTdp() == gpu.getTdp() && getMemory_clock() == gpu.getMemory_clock() && getCore_clock() == gpu.getCore_clock() && getBoost_clock() == gpu.getBoost_clock() && getLenght() == gpu.getLenght() && getSlot_width() == gpu.getSlot_width() && Objects.equals(getName(), gpu.getName()) && Objects.equals(getShop_URL(), gpu.getShop_URL()) && Objects.equals(getImage_URL(), gpu.getImage_URL()) && Objects.equals(getMemory(), gpu.getMemory()) && Objects.equals(getPower_cable(), gpu.getPower_cable());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getMemory(), getMemory_clock(), getCore_clock(), getBoost_clock(), getLenght(), getSlot_width(), getPower_cable());
+    }
+
+    @Override
+    public String toString() {
+        return "GPU{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", memory='" + memory + '\'' +
+                ", memory_clock=" + memory_clock +
+                ", core_clock=" + core_clock +
+                ", boost_clock=" + boost_clock +
+                ", lenght=" + lenght +
+                ", slot_width=" + slot_width +
+                ", power_cable='" + power_cable + '\'' +
+                '}';
     }
 }

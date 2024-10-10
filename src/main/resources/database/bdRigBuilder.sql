@@ -166,7 +166,7 @@ create table GestireProcessor(
     idProcessor int not null,
     primary key(idAdmin, idProcessor),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idProcessor) references Processor(id)
+    foreign key(idProcessor) references Processor(id) on delete cascade
 );
 
 #GestireGPU(idAdmin, idGPU)
@@ -175,7 +175,7 @@ create table GestireGPU(
     idGPU int not null,
     primary key(idAdmin, idGPU),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idGPU) references GPU(id)
+    foreign key(idGPU) references GPU(id) on delete cascade
 );
 
 #GestireRAM(idAdmin, idRAM)
@@ -184,7 +184,7 @@ create table GestireRAM(
     idRAM int not null,
     primary key(idAdmin, idRAM),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idRAM) references RAM(id)
+    foreign key(idRAM) references RAM(id) on delete cascade
 );
 
 #GestireSSD(idAdmin, idSSD)
@@ -193,7 +193,7 @@ create table GestireSSD(
     idSSD int not null,
     primary key(idAdmin, idSSD),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idSSD) references SSD(id)
+    foreign key(idSSD) references SSD(id) on delete cascade
 );
 
 #GestireMOBO(idAdmin, idMOBO)
@@ -202,7 +202,7 @@ create table GestireMOBO(
     idMOBO int not null,
     primary key(idAdmin, idMOBO),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idMOBO) references Motherboard(id)
+    foreign key(idMOBO) references Motherboard(id) on delete cascade
 );
 
 #GestireCooler(idAdmin, idCooler)
@@ -211,7 +211,7 @@ create table GestireCooler(
     idCooler int not null,
     primary key(idAdmin, idCooler),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idCooler) references Cooler(id)
+    foreign key(idCooler) references Cooler(id) on delete cascade
 );
 
 #GestirePSU(idAdmin, idPSU)
@@ -220,7 +220,7 @@ create table GestirePSU(
     idPSU int not null,
     primary key(idAdmin, idPSU),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idPSU) references PSU(id)
+    foreign key(idPSU) references PSU(id) on delete cascade
 );
 
 #GestireCaseBox(idAdmin, idCase)
@@ -229,5 +229,5 @@ create table GestireCaseBox(
     idCaseBox int not null,
     primary key(idAdmin, idCaseBox),
     foreign key(idAdmin) references Administrator(id),
-    foreign key(idCaseBox) references CaseBox(id)
+    foreign key(idCaseBox) references CaseBox(id) on delete cascade
 );

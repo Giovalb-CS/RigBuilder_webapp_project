@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class PSU {
     private int id;
     private String name;
@@ -102,5 +104,35 @@ public class PSU {
 
     public void setLenght(int lenght) {
         this.lenght = lenght;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PSU)) return false;
+        PSU psu = (PSU) o;
+        return Double.compare(getRating(), psu.getRating()) == 0 && Double.compare(getPrice(), psu.getPrice()) == 0 && getTdp() == psu.getTdp() && getWattage() == psu.getWattage() && getLenght() == psu.getLenght() && Objects.equals(getName(), psu.getName()) && Objects.equals(getShop_URL(), psu.getShop_URL()) && Objects.equals(getImage_URL(), psu.getImage_URL()) && Objects.equals(getType(), psu.getType()) && Objects.equals(getEfficiency(), psu.getEfficiency());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getType(), getEfficiency(), getWattage(), getLenght());
+    }
+
+    @Override
+    public String toString() {
+        return "PSU{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", shop_URL='" + shop_URL + '\'' +
+                ", image_URL='" + image_URL + '\'' +
+                ", tdp=" + tdp +
+                ", type='" + type + '\'' +
+                ", efficiency='" + efficiency + '\'' +
+                ", wattage=" + wattage +
+                ", lenght=" + lenght +
+                '}';
     }
 }

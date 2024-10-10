@@ -29,6 +29,7 @@
 
         <%ArrayList<Processor> processors = (ArrayList<Processor>) request.getAttribute("processors");%>
 
+        <%--
         <%if (request.getAttribute("addedSuccessfully")!=null) {%>
             <div class="messageContainer success">
                 <h3>Added successfully!</h3>
@@ -39,6 +40,17 @@
                 <h3>Edited successfully!</h3>
             </div>
         <%}%>
+        <%if (request.getAttribute("deletedSuccessfully")!=null) {%>
+        <div class="messageContainer success">
+            <h3>Edited successfully!</h3>
+        </div>
+        <%}%>
+        <%if (request.getAttribute("deleteError")!=null) {%>
+        <div class="messageContainer failure">
+            <h3>An error occurred while trying to delete the component. Please, try again.</h3>
+        </div>
+        <%}%>
+        --%>
 
         <form class="add-button-container">
             <button type="submit" formmethod="get" formaction="addProcessor"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add <%=fileName.substring(0, fileName.length()-1)%></button>
