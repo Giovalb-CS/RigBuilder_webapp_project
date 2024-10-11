@@ -23,7 +23,8 @@
             <div class="messageContainer failure">
                 <h3>The component you tried to add already exists.</h3>
             </div>
-        <%} else if (request.getAttribute("formError")!=null){%>
+        <%}%>
+        <%if (request.getAttribute("formError")!=null){%>
             <div class="messageContainer failure">
                 <h3>There was an error with the parameters of the form. Please, try again.</h3>
             </div>

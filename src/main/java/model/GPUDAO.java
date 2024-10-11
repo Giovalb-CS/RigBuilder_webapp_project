@@ -17,7 +17,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -39,18 +39,31 @@ public class GPUDAO {
 
     public List<GPU> doRetrieveByName(String name) {
         try {
-            List<GPU> gpuList = new ArrayList<GPU>();
+            List<GPU> gpuList = new ArrayList<>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from gpu where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM gpu WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -81,7 +94,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -112,7 +125,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -143,7 +156,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -176,7 +189,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -207,7 +220,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -238,7 +251,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -271,7 +284,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -303,7 +316,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -336,7 +349,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -369,7 +382,7 @@ public class GPUDAO {
                 GPU gpu = new GPU();
                 gpu.setId(resultSet.getInt("id"));
                 gpu.setName(resultSet.getString("name"));
-                gpu.setRating(resultSet.getInt("rating"));
+                gpu.setRating(resultSet.getDouble("rating"));
                 gpu.setPrice(resultSet.getDouble("price"));
                 gpu.setShop_URL(resultSet.getString("shop_URL"));
                 gpu.setImage_URL(resultSet.getString("image_URL"));
@@ -389,7 +402,88 @@ public class GPUDAO {
         return gpuList;
     }
 
-    public void doSave(GPU gpu) {
+    public List<GPU> doRetrieveFiltered(Double minPrice, Double maxPrice, String memory, Integer maxLenght, Integer maxSlotWidth, Double minRating, Double maxRating) {
+        try {
+            List<GPU> gpuList = new ArrayList<>();
+            Connection connection = ConPool.getConnection();
+
+            StringBuilder query = new StringBuilder("SELECT * FROM gpu WHERE 1=1");
+
+            if (minPrice != null) {
+                query.append(" AND price >= ?");
+            }
+            if (maxPrice != null) {
+                query.append(" AND price <= ?");
+            }
+            if (memory != null && !memory.isEmpty()) {
+                query.append(" AND memory = ?");
+            }
+            if (maxLenght != null) {
+                query.append(" AND lenght <= ?");
+            }
+            if (maxSlotWidth != null) {
+                query.append(" AND slot_width <= ?");
+            }
+            if (minRating != null) {
+                query.append(" AND rating >= ?");
+            }
+            if (maxRating != null) {
+                query.append(" AND rating <= ?");
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+
+            int paramIndex = 1;
+            if (minPrice != null) {
+                preparedStatement.setDouble(paramIndex++, minPrice);
+            }
+            if (maxPrice != null) {
+                preparedStatement.setDouble(paramIndex++, maxPrice);
+            }
+            if (memory != null && !memory.isEmpty()) {
+                preparedStatement.setString(paramIndex++, memory);
+            }
+            if (maxLenght != null) {
+                preparedStatement.setInt(paramIndex++, maxLenght);
+            }
+            if (maxSlotWidth != null) {
+                preparedStatement.setInt(paramIndex++, maxSlotWidth);
+            }
+            if (minRating != null) {
+                preparedStatement.setDouble(paramIndex++, minRating);
+            }
+            if (maxRating != null) {
+                preparedStatement.setDouble(paramIndex++, maxRating);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                GPU gpu = new GPU();
+                gpu.setId(resultSet.getInt("id"));
+                gpu.setName(resultSet.getString("name"));
+                gpu.setRating(resultSet.getDouble("rating"));
+                gpu.setPrice(resultSet.getDouble("price"));
+                gpu.setShop_URL(resultSet.getString("shop_URL"));
+                gpu.setImage_URL(resultSet.getString("image_URL"));
+                gpu.setTdp(resultSet.getInt("tdp"));
+                gpu.setMemory(resultSet.getString("memory"));
+                gpu.setMemory_clock(resultSet.getInt("memory_clock"));
+                gpu.setCore_clock(resultSet.getInt("core_clock"));
+                gpu.setBoost_clock(resultSet.getInt("boost_clock"));
+                gpu.setLenght(resultSet.getInt("lenght"));
+                gpu.setSlot_width(resultSet.getInt("slot_width"));
+                gpu.setPower_cable(resultSet.getString("power_cable"));
+                gpuList.add(gpu);
+            }
+
+            return gpuList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int doSave(GPU gpu) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into gpu (name, rating, price, shop_url, image_url, tdp, memory, memory_clock, core_clock, boost_clock, lenght, slot_width, power_cable) values (?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -409,8 +503,13 @@ public class GPUDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            gpu.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                gpu.setId(generatedId);
+                return generatedId;
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -453,5 +552,20 @@ public class GPUDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> doRetrieveDistinctMemoryTypes() {
+        List<String> memoryTypes = new ArrayList<>();
+        String sql = "SELECT DISTINCT memory FROM gpu";
+        try (Connection connection = ConPool.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                memoryTypes.add(resultSet.getString("memory"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return memoryTypes;
     }
 }

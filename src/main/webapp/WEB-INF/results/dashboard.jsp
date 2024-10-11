@@ -22,7 +22,7 @@
                 <p>CPUs</p>
             </button>
 
-            <button class="cat-gpu" type="submit" formaction="" formmethod="post">
+            <button class="cat-gpu" type="submit" formaction="gpus" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/gpu.png" alt="gpu">
                 <p>GPUs</p>
             </button>
