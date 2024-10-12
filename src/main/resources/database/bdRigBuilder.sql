@@ -60,6 +60,35 @@ create table GPU(
     slot_width int not null,
     power_cable varchar(15) not null
 );
+insert into GPU values
+(1,
+"ASUS ROG STRIX NVIDIA GeForce RTX4090 O24G GAMING, Scheda Grafica Gaming, OpenGL 4.6, 24 GB GDDR6X, PCIe 4.0, HDMI 2.1a, DisplayPort 1.4a, GPU Tweak III, Nero",
+4.4,
+2438.88,
+"https://www.amazon.it/ASUS-GeForce-RTX4090-Grafica-DisplayPort/dp/B0BHD6N2CK/ref=sr_1_2?crid=3TH91YUMPUQU0&dib=eyJ2IjoiMSJ9.wZXSihhC9cQQVorzrry8JGK-76S0nREsxhgU0pCHopChHWqN2jGvxc0vWMobhg44AifvQRhEVfjz1OxcfRFQUz5Er2qSLuxtTkYvn9-gs1iV-VHRMtz7SKsYMynzPqtcarsajXDGlWncWOCi3frv1s3xPFKx1YB12iqdSym3nZwsS48L75Ldd_JRDpill6LUyHmZkIGuz-O2W-5xfGA2y54CjKLSEEdSN8BenR4IVlwZ880SDL8NqsHShMtIoWAHqr8FRIx9mrn0gZ3aKZirAi3IN0Cc44snBwSJXBc-iN0.ViRpTe4Ge1QIyvGkgCTo5kP58ZGIp1fs3aKGC63YpB8&dib_tag=se&keywords=nvidia+rtx+4090+ti+super&qid=1728662746&sprefix=nvidia+rtx+4090+ti%2Caps%2C145&sr=8-2&ufe=app_do%3Aamzn1.fos.9d4f9b77-768c-4a4e-94ad-33674c20ab35",
+"https://m.media-amazon.com/images/I/81VLjsBvSjL._AC_SX522_.jpg",
+1000,
+"24GB GDDR6X",
+21000,
+2610,
+2640,
+357,
+2,
+"1x 16pin"),
+(2,
+"Asus Dual NVIDIA GeForce RTX 3060 V2 OC Edition Scheda Grafica, 12GB GDDR6 192-bit 15 Gbps PCIE 4.0, GPU NVIDIA Ampere, DUAL-RTX3060-O12G-V2",
+4.7,
+295.0,
+"https://www.amazon.it/ASUS-GeForce-Grafica-192-bit-DUAL-RTX3060-O12G-V2/dp/B096658ZWP/ref=sr_1_1?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=NVK7JUMK643Q&dib=eyJ2IjoiMSJ9.SywKHJKEd_dhD7em5BvUMEkxDjqkHQRRldUT7XqSlO_Gch3hwafvtsIwOMGM4fvuWAgwKPDXo3UFBC_y2LVKhP8Rjb57NWRdrBGotbaGHCLReEp6HADiodzkrEdnSQry5cfOmkV3MI2xNuSgy9gcE7EgpbadTEHE75jA1ISXt4utThTSM3hLVNvyt3fG963iiEPOGOA2bd2t8MywFftnrFWDqj89sjpgkqsOCDC_-d3mMCJ1Ddh5bcstOySnSm72wsDlN5VwbQ0QPv3RwSsBTvcmgRmhbk4fqNVPDiuWKSc.HyCOxgxYlOYSWzFbhdL608lEtUBOjZwb7fPDhnEK8po&dib_tag=se&keywords=nvidia+rtx+2070+gigabyte&qid=1728662704&sprefix=nvidia+rtx+2070+gigabyte%2Caps%2C149&sr=8-1&ufe=app_do%3Aamzn1.fos.9d4f9b77-768c-4a4e-94ad-33674c20ab35",
+"https://m.media-amazon.com/images/I/81cy1Ep7vFL._AC_SY355_.jpg",
+650,
+"12GB GDDR6",
+15000,
+1837,
+1867,
+200,
+2,
+"1x 8pin");
 
 #RAM(id, name, rating, price, shop_URL, image_URL, TDP, type, clock)
 create table RAM(

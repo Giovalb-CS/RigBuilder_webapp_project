@@ -47,4 +47,17 @@ public class GestireGPUDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireGPU gestireGPU) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestiregpu (idAdmin, idGPU) values (?,?)");
+            preparedStatement.setInt(1, gestireGPU.getIdAdmin());
+            preparedStatement.setInt(2, gestireGPU.getIdGPU());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
