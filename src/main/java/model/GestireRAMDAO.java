@@ -47,4 +47,17 @@ public class GestireRAMDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireRAM gestireRAM) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestireram (idAdmin, idRAM) values (?,?)");
+            preparedStatement.setInt(1, gestireRAM.getIdAdmin());
+            preparedStatement.setInt(2, gestireRAM.getIdRAM());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

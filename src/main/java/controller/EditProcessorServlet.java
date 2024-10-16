@@ -36,6 +36,7 @@ public class EditProcessorServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Processor processor_before = processorDao.doRetrieveByID(id);
         Processor processor_after = new Processor();
+
         String name = request.getParameter("name");
         String rating  = request.getParameter("rating");
         String price = request.getParameter("price");

@@ -102,6 +102,25 @@ create table RAM(
     type varchar(8) not null,
     clock int not null
 );
+insert into RAM values
+(1,
+"CORSAIR VENGEANCE RGB DDR5 32GB (2x16GB) DDR5 6000MHz CL30 AMD EXPO Intel XMP iCUE Memoria Compatibile per Computer - Grigio (CMH32GX5M2B6000Z30K)",
+4.8,
+124.9,
+"https://www.amazon.it/CORSAIR-VENGEANCE-6000MHz-Compatibile-Computer/dp/B0BPTKD797/ref=sr_1_6?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3ST29QIKQBBIC&dib=eyJ2IjoiMSJ9.ZN1k5yscRwMZ_P9FLJtaFxPyPLMoS4EEUHzwoK86teZ1LvFc3TuSeOttJURYb-EiNdUDYJDsOxrfmz1wBmqpnUxkJAU6Jn2wLzI6HpE7SLieMdofJO_Ac4d6uu6B96zMTRYgAZ6z8vYqbZ0vy-W6fBa6rv8MBJ6PPoKOQs4vpPnHwUg9pPHCww3qU8nKUUIc2B-aWc3Xzt2M9JdTjTtNyuiAaFqrEaO1jHOcaMaJNRFMZOwRoi2DpknctYKoY55lk6iAp74wn_Bhjre_lPtfCdnLtdW66sSuxqrDfg-VvEI.vMVT64JenRT-QTnTSw7gRmYT2eC1JLmf8q4Dv0UvIA0&dib_tag=se&keywords=ram%2Bddr5%2B8400&qid=1729095252&sprefix=ram%2Bddr5%2B8400%2Caps%2C182&sr=8-6&ufe=INHOUSE_INSTALLMENTS%3AIT_IHI_5M&th=1",
+"https://m.media-amazon.com/images/I/61EVf-QxpvL._AC_SX679_.jpg",
+2,
+"DDR5",
+6000),
+(2,
+"G.Skill Trident Z RGB 16GB DDR4 memory module 2 x 8 GB 3200 MHz",
+4.7,
+50,
+"https://www.amazon.it/G-Skill-Trident-16GB-3200MHz-memoria/dp/B01MTDEYHU/ref=sr_1_2_mod_primary_new?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1GZ8PVS91BDW9&dib=eyJ2IjoiMSJ9.Uws9ruUjhUuDDPf-AUJmPjBwUHLV0_tYUwVZKS-1ShUPEiGoOMSfmUN3iRwcR3ZRP_vz3XpA-WzqUJ_IHV5_bUKvMc-haODUTd8Gn8cjuM3RMScnCgLtp2ilXbDRTKc_nX38PlSQsQmPBM6EcZnznu-MQ4jDzA6ZI8VmJAPl1IuB7mkP6iIq1tLrmvi1tEoSgCpAQ_8SCKunVqpMQnz2HtP0rC11By-h8gRjgK_2-KDZGD5roo_p4syHEJFaBwz-516dBF4iVqu15u4M_H4xB0_KRJ0gg7KArg39gFRbKf8.3LwCs0-JA4SaawaKxE0XSMa9erMARexf0i0qQWeABms&dib_tag=se&keywords=gskill+trident+z+ddr4+3200mhz&qid=1729095035&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=gskill+trident+z+ddr4+3200mhz%2Caps%2C117&sr=8-2",
+"https://m.media-amazon.com/images/I/61l4EStxhnL._AC_SX679_.jpg",
+2,
+"DDR4",
+3200);
 
 #SSD(id, name, rating, price, shop_URL, image_URL, TDP, PCIe_gen, capacity, speed_read, speed_write)
 create table SSD(

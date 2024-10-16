@@ -17,7 +17,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -36,16 +36,29 @@ public class RAMDAO {
         try {
             List<RAM> ramList = new ArrayList<RAM>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from ram where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM ram WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -71,7 +84,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -97,7 +110,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -123,7 +136,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -151,7 +164,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -177,7 +190,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -203,7 +216,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -231,7 +244,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -258,7 +271,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -273,7 +286,34 @@ public class RAMDAO {
         }
     }
 
-    public List<RAM> doRetrieveFiltered(Integer ratingMin, Integer ratingMax, Double priceMin, Double priceMax, String type, Integer clockMin, Integer clockMax) {
+    public List<RAM> doRetrieveAllByMinClock(int clock) {
+        try {
+            List<RAM> ramList = new ArrayList<RAM>();
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from ram where ram.clock >= ? order by clock");
+            preparedStatement.setInt(1, clock);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                RAM ram = new RAM();
+                ram.setId(resultSet.getInt("id"));
+                ram.setName(resultSet.getString("name"));
+                ram.setRating(resultSet.getDouble("rating"));
+                ram.setPrice(resultSet.getDouble("price"));
+                ram.setShop_URL(resultSet.getString("shop_URL"));
+                ram.setImage_URL(resultSet.getString("image_URL"));
+                ram.setTdp(resultSet.getInt("tdp"));
+                ram.setType(resultSet.getString("type"));
+                ram.setClock(resultSet.getInt("clock"));
+                ramList.add(ram);
+            }
+            return ramList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<RAM> doRetrieveFiltered(Double minRating, Double maxRating, Double minPrice, Double maxPrice, String type, Integer clockMin, Integer clockMax) {
         try {
             List<RAM> ramList = new ArrayList<>();
             Connection connection = ConPool.getConnection();
@@ -281,51 +321,59 @@ public class RAMDAO {
             // Costruzione dinamica della query SQL
             StringBuilder sql = new StringBuilder("SELECT * FROM ram WHERE 1=1");
 
-            // Lista per memorizzare i valori dei parametri della query
-            List<Object> parameters = new ArrayList<>();
-
             // Aggiunta del filtro per il rating
-            if (ratingMin != null) {
+            if (minRating != null) {
                 sql.append(" AND rating >= ?");
-                parameters.add(ratingMin);
             }
-            if (ratingMax != null) {
+            if (maxRating != null) {
                 sql.append(" AND rating <= ?");
-                parameters.add(ratingMax);
             }
 
             // Aggiunta del filtro per il prezzo
-            if (priceMin != null) {
+            if (minPrice != null) {
                 sql.append(" AND price >= ?");
-                parameters.add(priceMin);
             }
-            if (priceMax != null) {
+            if (maxPrice != null) {
                 sql.append(" AND price <= ?");
-                parameters.add(priceMax);
             }
 
             // Aggiunta del filtro per il tipo di RAM
             if (type != null && !type.isEmpty()) {
                 sql.append(" AND type = ?");
-                parameters.add(type);
             }
 
             // Aggiunta del filtro per la frequenza di clock
             if (clockMin != null) {
                 sql.append(" AND clock >= ?");
-                parameters.add(clockMin);
             }
             if (clockMax != null) {
                 sql.append(" AND clock <= ?");
-                parameters.add(clockMax);
             }
 
             // Creazione del PreparedStatement
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
 
-            // Assegnazione dei parametri al PreparedStatement
-            for (int i = 0; i < parameters.size(); i++) {
-                preparedStatement.setObject(i + 1, parameters.get(i));
+            int paramIndex = 1;
+            if (minPrice != null) {
+                preparedStatement.setDouble(paramIndex++, minPrice);
+            }
+            if (maxPrice != null) {
+                preparedStatement.setDouble(paramIndex++, maxPrice);
+            }
+            if (minRating != null) {
+                preparedStatement.setDouble(paramIndex++, minRating);
+            }
+            if (maxRating != null) {
+                preparedStatement.setDouble(paramIndex++, maxRating);
+            }
+            if (type != null && !type.isEmpty()) {
+                preparedStatement.setString(paramIndex++, type);
+            }
+            if (clockMin != null) {
+                preparedStatement.setInt(paramIndex++, clockMin);
+            }
+            if (clockMax != null) {
+                preparedStatement.setInt(paramIndex++, clockMax);
             }
 
             // Esecuzione della query e popolamento della lista di RAM
@@ -334,7 +382,7 @@ public class RAMDAO {
                 RAM ram = new RAM();
                 ram.setId(resultSet.getInt("id"));
                 ram.setName(resultSet.getString("name"));
-                ram.setRating(resultSet.getInt("rating"));
+                ram.setRating(resultSet.getDouble("rating"));
                 ram.setPrice(resultSet.getDouble("price"));
                 ram.setShop_URL(resultSet.getString("shop_URL"));
                 ram.setImage_URL(resultSet.getString("image_URL"));
@@ -351,7 +399,7 @@ public class RAMDAO {
         }
     }
 
-    public void doSave(RAM ram) {
+    public int doSave(RAM ram) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into ram (name, rating, price, shop_url, image_url, tdp, type, clock) values (?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -366,8 +414,11 @@ public class RAMDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            ram.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                ram.setId(generatedId);
+                return generatedId;
+            } else throw new RuntimeException("Failed to obtain ID.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -405,5 +456,20 @@ public class RAMDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> doRetrieveDistinctRamTypes() {
+        List<String> ramTypes = new ArrayList<>();
+        String sql = "SELECT DISTINCT type FROM ram";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ramTypes.add(resultSet.getString("type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ramTypes;
     }
 }

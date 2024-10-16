@@ -3,83 +3,73 @@ package controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Processor;
-import model.ProcessorDAO;
+import model.RAM;
+import model.RAMDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "VisualizeProcessors", value = "/processors")
-public class VisualizeProcessors extends HttpServlet {
-
+@WebServlet(name = "VisualizeRAMs", value = "/rams")
+public class VisualizeRAMs extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProcessorDAO processorDao = new ProcessorDAO();
+        RAMDAO ramDAO = new RAMDAO();
 
-        // Recupero dei valori unici di socket e ramType per i <select>
-        List<String> sockets = processorDao.doRetrieveDistinctSockets();
-        List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
-        request.setAttribute("sockets", sockets);
+        List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
         request.setAttribute("ramTypes", ramTypes);
 
-        // Recupero dei parametri dal form
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String ratingSort = request.getParameter("ratingSort");
         String priceSort = request.getParameter("priceSort");
         String minPrice = request.getParameter("minPrice");
         String maxPrice = request.getParameter("maxPrice");
-        String socket = request.getParameter("socket");
         String ramType = request.getParameter("ramType");
+        String clock = request.getParameter("clock");
 
-        // Filtro composito
         String compositeMinPrice = request.getParameter("compositeMinPrice");
         String compositeMaxPrice = request.getParameter("compositeMaxPrice");
-        String compositeSocket = request.getParameter("compositeSocket");
         String compositeRamType = request.getParameter("compositeRamType");
+        String compositeMinClock = request.getParameter("compositeMinClock");
+        String compositeMaxClock = request.getParameter("compositeMaxClock");
         String compositeMinRating = request.getParameter("compositeMinRating");
         String compositeMaxRating = request.getParameter("compositeMaxRating");
 
-        // Lista dei processori filtrati
-        List<Processor> processors = new ArrayList<>();
+        List<RAM> rams = new ArrayList<>();
 
-        // Logica dei filtri singoli
         if (id != null && !id.isEmpty()) {
-            Processor processor = processorDao.doRetrieveByID(Integer.parseInt(id));
-            if ((processor != null)) {
-                processors.add(processor);
+            RAM ram = ramDAO.doRetrieveByID(Integer.parseInt(id));
+            if (ram != null) {
+                rams.add(ram);
             }
         } else if (name != null && !name.isEmpty()) {
-            processors = processorDao.doRetrieveByName(name);
+            rams = ramDAO.doRetrieveByName(name);
         } else if (ratingSort != null) {
-            processors = ratingSort.equals("asc")
-                    ? processorDao.doRetrieveAllByRatingAsc()
-                    : processorDao.doRetrieveAllByRatingDesc();
+            rams = ratingSort.equals("asc")
+                    ? ramDAO.doRetrieveAllByRatingAsc()
+                    : ramDAO.doRetrieveAllByRatingDesc();
         } else if (priceSort != null) {
-            processors = priceSort.equals("asc")
-                    ? processorDao.doRetrieveAllByPriceAsc()
-                    : processorDao.doRetrieveAllByPriceDesc();
+            rams = priceSort.equals("asc")
+                    ? ramDAO.doRetrieveAllByPriceAsc()
+                    : ramDAO.doRetrieveAllByPriceDesc();
         } else if (minPrice != null && maxPrice != null) {
-            processors = processorDao.doRetrieveAllByPriceBetween(
-                    Double.parseDouble(minPrice), Double.parseDouble(maxPrice));
-        } else if (socket != null && !socket.isEmpty()) {
-            processors = processorDao.doRetrieveBySocket(socket);
+            rams = ramDAO.doRetrieveAllByPriceBetween(Double.parseDouble(minPrice), Double.parseDouble(maxPrice));
         } else if (ramType != null && !ramType.isEmpty()) {
-            processors = processorDao.doRetrieveByRAMType(ramType);
+            rams = ramDAO.doRetrieveAllByType(ramType);
+        } else if (clock != null && !clock.isEmpty()) {
+            rams = ramDAO.doRetrieveAllByMinClock(Integer.parseInt(clock));
         } else {
-            processors = processorDao.doRetrieveAll();
+            rams = ramDAO.doRetrieveAll();
         }
 
-        // Logica del filtro composito
         if (
                 compositeMinPrice != null || compositeMaxPrice != null ||
-                (compositeSocket != null && !compositeSocket.isEmpty()) ||
                 (compositeRamType != null && !compositeRamType.isEmpty()) ||
+                (compositeMinClock != null && !compositeMinClock.isEmpty()) ||
+                (compositeMaxClock != null && !compositeMaxClock.isEmpty()) ||
                 compositeMinRating != null || compositeMaxRating != null
         ) {
-
-            // Trasforma solo se il parametro non è vuoto o nullo
             Double minPriceVal = (compositeMinPrice != null && !compositeMinPrice.isEmpty())
                     ? Double.parseDouble(compositeMinPrice)
                     : null;
@@ -96,22 +86,27 @@ public class VisualizeProcessors extends HttpServlet {
                     ? Double.parseDouble(compositeMaxRating)
                     : null;
 
-            // Esegui il filtro composito
-            processors = processorDao.doRetrieveFiltered(
+            Integer minClockVal = (compositeMinClock != null && !compositeMinClock.isEmpty())
+                    ? Integer.parseInt(compositeMinClock)
+                    : null;
+
+            Integer maxClockVal = (compositeMaxClock != null && !compositeMaxClock.isEmpty())
+                    ? Integer.parseInt(compositeMaxClock)
+                    : null;
+
+            rams = ramDAO.doRetrieveFiltered(
+                    minRatingVal,
+                    maxRatingVal,
                     minPriceVal,
                     maxPriceVal,
-                    compositeSocket != null && !compositeSocket.isEmpty() ? compositeSocket : null,
                     compositeRamType != null && !compositeRamType.isEmpty() ? compositeRamType : null,
-                    minRatingVal,
-                    maxRatingVal
+                    minClockVal,
+                    maxClockVal
             );
         }
+        request.setAttribute("rams", rams);
 
-        // Imposta i processori come attributo nella richiesta
-        request.setAttribute("processors", processors);
-
-        // Forward alla JSP per visualizzare i risultati
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/processors.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/rams.jsp");
         rd.forward(request, response);
     }
 
@@ -119,14 +114,12 @@ public class VisualizeProcessors extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("administrator") != null) {
-            ArrayList<Processor> processors = (ArrayList<Processor>) (new ProcessorDAO()).doRetrieveAll();
-            request.setAttribute("processors", processors);
-            ProcessorDAO processorDao = new ProcessorDAO();
-            List<String> sockets = processorDao.doRetrieveDistinctSockets();
-            List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
-            request.setAttribute("sockets", sockets);
+            RAMDAO ramDAO = new RAMDAO();
+            ArrayList<RAM> rams = (ArrayList<RAM>) ramDAO.doRetrieveAll();
+            request.setAttribute("rams", rams);
+            List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
             request.setAttribute("ramTypes", ramTypes);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/processors.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/rams.jsp");
             rd.forward(request, response);
         } else {
             response.sendRedirect("index.jsp?notLoggedIn=1");

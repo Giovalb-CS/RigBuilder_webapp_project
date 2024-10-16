@@ -27,7 +27,7 @@
                 <p>GPUs</p>
             </button>
 
-            <button class="cat-ram" type="submit" formaction="" formmethod="post">
+            <button class="cat-ram" type="submit" formaction="rams" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/ram.png" alt="ram">
                 <p>RAMs</p>
             </button>
