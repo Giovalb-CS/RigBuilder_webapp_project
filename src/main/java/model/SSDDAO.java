@@ -17,7 +17,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -38,16 +38,29 @@ public class SSDDAO {
         try {
             List<SSD> ssdList = new ArrayList<SSD>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from ssd where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM ssd WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -75,7 +88,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -103,7 +116,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -131,7 +144,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -161,7 +174,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -189,7 +202,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -217,7 +230,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -247,7 +260,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -276,7 +289,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -305,7 +318,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -322,16 +335,13 @@ public class SSDDAO {
         }
     }
 
-    public List<SSD> doRetrieveFiltered(String name, Double minPrice, Double maxPrice, Integer minRating, Integer maxRating, String capacity, String pcieGen) {
+    public List<SSD> doRetrieveFiltered(Double minPrice, Double maxPrice, Double minRating, Double maxRating, String capacity, String pcieGen) {
         try {
             List<SSD> ssdList = new ArrayList<>();
             Connection connection = ConPool.getConnection();
 
             StringBuilder query = new StringBuilder("SELECT * FROM ssd WHERE 1=1");
 
-            if (name != null && !name.isEmpty()) {
-                query.append(" AND name LIKE ?");
-            }
             if (minPrice != null) {
                 query.append(" AND price >= ?");
             }
@@ -355,9 +365,6 @@ public class SSDDAO {
 
             int parameterIndex = 1;
 
-            if (name != null && !name.isEmpty()) {
-                preparedStatement.setString(parameterIndex++, "%" + name + "%");
-            }
             if (minPrice != null) {
                 preparedStatement.setDouble(parameterIndex++, minPrice);
             }
@@ -365,10 +372,10 @@ public class SSDDAO {
                 preparedStatement.setDouble(parameterIndex++, maxPrice);
             }
             if (minRating != null) {
-                preparedStatement.setInt(parameterIndex++, minRating);
+                preparedStatement.setDouble(parameterIndex++, minRating);
             }
             if (maxRating != null) {
-                preparedStatement.setInt(parameterIndex++, maxRating);
+                preparedStatement.setDouble(parameterIndex++, maxRating);
             }
             if (capacity != null && !capacity.isEmpty()) {
                 preparedStatement.setString(parameterIndex++, capacity);
@@ -383,7 +390,7 @@ public class SSDDAO {
                 SSD ssd = new SSD();
                 ssd.setId(resultSet.getInt("id"));
                 ssd.setName(resultSet.getString("name"));
-                ssd.setRating(resultSet.getInt("rating"));
+                ssd.setRating(resultSet.getDouble("rating"));
                 ssd.setPrice(resultSet.getDouble("price"));
                 ssd.setShop_URL(resultSet.getString("shop_URL"));
                 ssd.setImage_URL(resultSet.getString("image_URL"));
@@ -400,7 +407,7 @@ public class SSDDAO {
         }
     }
 
-    public void doSave(SSD ssd) {
+    public int doSave(SSD ssd) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into ssd (name, rating, price, shop_url, image_url, tdp, pcie_gen, capacity, speed_read, speed_write) values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -417,8 +424,13 @@ public class SSDDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            ssd.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                ssd.setId(generatedId);
+                return generatedId; // Restituisci l'ID generato
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -458,5 +470,35 @@ public class SSDDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> doRetrieveDistinctPCIeGenerations() {
+        List<String> gens = new ArrayList<>();
+        String sql = "SELECT DISTINCT pcie_gen FROM ssd";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                gens.add(rs.getString("pcie_gen"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gens;
+    }
+
+    public List<String> doRetrieveDistinctCapacities() {
+        List<String> capacities = new ArrayList<>();
+        String sql = "SELECT DISTINCT capacity FROM ssd";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                capacities.add(rs.getString("capacity"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return capacities;
     }
 }

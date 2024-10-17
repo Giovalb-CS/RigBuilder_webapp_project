@@ -136,6 +136,29 @@ create table SSD(
     speed_read int not null,
     speed_write int not null
 );
+insert into SSD values
+(1,
+"Crucial P3 Plus SSD 2TB PCIe Gen4 NVMe M.2 SSD Interno, Fino a 5.000 MB/s, Compatibile con Notebook e PC Desktop, Hard Disk SSD - CT2000P3PSSD801",
+4.7,
+124.9,
+"https://www.amazon.it/Crucial-Plus-PCIe-Gen4-interno/dp/B0BYW8FLKN/ref=sr_1_5?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=5LCN59F5OI9T&dib=eyJ2IjoiMSJ9.8TVbqvYvb-epgdJGz_nqAkc3hajW95n3wPRAb3iQQVMcKM_afZ_5qSZp1E4tkPSMiARBg-x8Jog-ExT1a4IAQX53hZ8rCOiU5FyzzeCXWFNywxDgSopXCvJ_ZTwoHV7LMn3fTHubCUCA-LcDv71IecAqsju7FYLL1lrM1bXbrQZBJkPjHinWJMrCfPBq3kvXwBspuACJoA3lTQeGyM5PHDe8S4jE-OIZZ69RygJi75gmBl3ao5FrEDsrgPDQPzZ5aU8pEb56ZjdHJhVmZ9HmPohqR2j6YKDi637d7yHxvQM.XxbemlSQn4KqdR7h-xz1rLS7vjx632ze6QrYnlb0du8&dib_tag=se&keywords=ssd+nvme+2tb&qid=1729155013&sprefix=ssd+nvme2tb%2Caps%2C178&sr=8-5&ufe=app_do%3Aamzn1.fos.d4b79b69-7fa3-49d4-9d2a-f8ac4bab3f93",
+"https://m.media-amazon.com/images/I/51xZaoS+Q1L._AC_SX522_.jpg",
+10,
+"4x4",
+"2TB",
+5000,
+4200),
+(2,
+"Lexar NQ790 2TB SSD Interno PCIe 4.0, M.2 2280 PCIe Gen4x4 NVMe 1.4, Lettura fino a 7000 MB/s, Unità a Stato Solido Interna ad Alte Prestazioni per Carichi di Lavoro Intensi, PS5 SSD",
+4.8,
+129.9,
+"https://www.amazon.it/Lexar-Interno-Lettura-Interna-Prestazioni/dp/B0CHS1SN9K/ref=sr_1_9?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=5LCN59F5OI9T&dib=eyJ2IjoiMSJ9.8TVbqvYvb-epgdJGz_nqAkc3hajW95n3wPRAb3iQQVMcKM_afZ_5qSZp1E4tkPSMiARBg-x8Jog-ExT1a4IAQX53hZ8rCOiU5FyzzeCXWFNywxDgSopXCvJ_ZTwoHV7LMn3fTHubCUCA-LcDv71IecAqsju7FYLL1lrM1bXbrQZBJkPjHinWJMrCfPBq3kvXwBspuACJoA3lTQeGyM5PHDe8S4jE-OIZZ69RygJi75gmBl3ao5FrEDsrgPDQPzZ5aU8pEb56ZjdHJhVmZ9HmPohqR2j6YKDi637d7yHxvQM.XxbemlSQn4KqdR7h-xz1rLS7vjx632ze6QrYnlb0du8&dib_tag=se&keywords=ssd+nvme+2tb&qid=1729155013&sprefix=ssd+nvme2tb%2Caps%2C178&sr=8-9&ufe=app_do%3Aamzn1.fos.9d4f9b77-768c-4a4e-94ad-33674c20ab35",
+"https://m.media-amazon.com/images/I/61CEtN360EL._AC_SX522_.jpg",
+10,
+"4x4",
+"2TB",
+7000,
+6000);
 
 #Motherboard(id, name, rating, price, shop_URL, image_URL, TDP, socket, chipset, RAM_type, RAM_max_speed, RAM_slot, RAM_max, PCIe_x16_slot, PCIe_x1_slot, M2_slot, SATA_slot, LAN, WIFI, form_factor)
 create table Motherboard(

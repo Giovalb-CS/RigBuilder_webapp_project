@@ -47,4 +47,18 @@ public class GestireSSDDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireSSD gestireSSD) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestiressd (idAdmin, idSSD) values (?,?)");
+            preparedStatement.setInt(1, gestireSSD.getIdAdmin());
+            preparedStatement.setInt(2, gestireSSD.getIdSSD());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

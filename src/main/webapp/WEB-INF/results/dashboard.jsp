@@ -32,7 +32,7 @@
                 <p>RAMs</p>
             </button>
 
-            <button class="cat-ssd" type="submit" formaction="" formmethod="post">
+            <button class="cat-ssd" type="submit" formaction="ssds" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/ssd.png" alt="ssd">
                 <p>SSDs</p>
             </button>
