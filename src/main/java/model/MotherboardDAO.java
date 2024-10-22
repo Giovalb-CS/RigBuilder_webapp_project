@@ -17,7 +17,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -47,16 +47,29 @@ public class MotherboardDAO {
         try {
             List<Motherboard> motherboardList = new ArrayList<Motherboard>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from motherboard where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM motherboard WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -93,7 +106,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -130,7 +143,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -167,7 +180,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -206,7 +219,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -243,7 +256,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -280,7 +293,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -319,7 +332,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -357,7 +370,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -395,7 +408,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -433,7 +446,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -471,7 +484,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -497,7 +510,7 @@ public class MotherboardDAO {
         }
     }
 
-    public List<Motherboard> doRetrieveFiltered(Integer minRating, Integer maxRating, Double minPrice, Double maxPrice, String socket, String chipset, String ramType, String formFactor) {
+    public List<Motherboard> doRetrieveFiltered(Double minRating, Double maxRating, Double minPrice, Double maxPrice, String socket, String chipset, String ramType, String formFactor) {
         List<Motherboard> motherboardList = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
@@ -534,10 +547,10 @@ public class MotherboardDAO {
             // Impostazione parametri query
             int paramIndex = 1;
             if (minRating != null) {
-                preparedStatement.setInt(paramIndex++, minRating);
+                preparedStatement.setDouble(paramIndex++, minRating);
             }
             if (maxRating != null) {
-                preparedStatement.setInt(paramIndex++, maxRating);
+                preparedStatement.setDouble(paramIndex++, maxRating);
             }
             if (minPrice != null) {
                 preparedStatement.setDouble(paramIndex++, minPrice);
@@ -564,7 +577,7 @@ public class MotherboardDAO {
                 Motherboard motherboard = new Motherboard();
                 motherboard.setId(resultSet.getInt("id"));
                 motherboard.setName(resultSet.getString("name"));
-                motherboard.setRating(resultSet.getInt("rating"));
+                motherboard.setRating(resultSet.getDouble("rating"));
                 motherboard.setPrice(resultSet.getDouble("price"));
                 motherboard.setShop_URL(resultSet.getString("shop_URL"));
                 motherboard.setImage_URL(resultSet.getString("image_URL"));
@@ -591,7 +604,7 @@ public class MotherboardDAO {
         return motherboardList;
     }
 
-    public void doSave(Motherboard motherboard) {
+    public int doSave(Motherboard motherboard) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into motherboard (name, rating, price, shop_url, image_url, tdp, socket, chipset, ram_type, ram_max_speed, ram_slot, ram_max, pcie_x16_slot, pcie_x1_slot, m2_slot, sata_slot, lan, wifi, form_factor) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -617,8 +630,13 @@ public class MotherboardDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            motherboard.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                motherboard.setId(generatedId);
+                return generatedId;
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -667,5 +685,95 @@ public class MotherboardDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> doRetrieveDistinctSockets() {
+        List<String> sockets = new ArrayList<>();
+        String sql = "SELECT DISTINCT socket FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sockets.add(rs.getString("socket"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sockets;
+    }
+
+    public List<String> doRetrieveDistinctChipsets() {
+        List<String> chipsets = new ArrayList<>();
+        String sql = "SELECT DISTINCT chipset FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                chipsets.add(rs.getString("chipset"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chipsets;
+    }
+
+    public List<String> doRetrieveDistinctRamTypes() {
+        List<String> ramTypes = new ArrayList<>();
+        String sql = "SELECT DISTINCT ram_type FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ramTypes.add(rs.getString("ram_type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ramTypes;
+    }
+
+    public List<String> doRetrieveDistinctFormFactors() {
+        List<String> formFactors = new ArrayList<>();
+        String sql = "SELECT DISTINCT form_factor FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                formFactors.add(rs.getString("form_factor"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return formFactors;
+    }
+
+    public List<String> doRetrieveDistinctLanTypes() {
+        List<String> lanTypes = new ArrayList<>();
+        String sql = "SELECT DISTINCT lan FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lanTypes.add(rs.getString("lan"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lanTypes;
+    }
+
+    public List<String> doRetrieveDistinctWifiTypes() {
+        List<String> wifis = new ArrayList<>();
+        String sql = "SELECT DISTINCT wifi FROM motherboard";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                wifis.add(rs.getString("wifi"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wifis;
     }
 }

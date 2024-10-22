@@ -47,4 +47,17 @@ public class GestireMotherboardDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireMotherboard gestireMotherboard) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestiremobo (idAdmin, idMOBO) values (?,?)");
+            preparedStatement.setInt(1, gestireMotherboard.getIdAdmin());
+            preparedStatement.setInt(2, gestireMotherboard.getIdMotherboard());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -37,7 +37,7 @@
                 <p>SSDs</p>
             </button>
 
-            <button class="cat-mobo" type="submit" formaction="" formmethod="post">
+            <button class="cat-mobo" type="submit" formaction="motherboards" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/motherboard.png" alt="motherboard">
                 <p>MOBOs</p>
             </button>

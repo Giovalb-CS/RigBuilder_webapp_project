@@ -70,14 +70,14 @@ public class AddRamServlet extends HttpServlet {
            } else {
                List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
                request.setAttribute("ramTypes", ramTypes);
-               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addRam.jsp");
+               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addRam.jsp?alreadyExists=1");
                request.setAttribute("alreadyExists", 1);
                rd.forward(request, response);
            }
         } else {
             List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
             request.setAttribute("ramTypes", ramTypes);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addRam.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addRam.jsp?formError=1");
             request.setAttribute("formError", 1);
             rd.forward(request, response);
         }

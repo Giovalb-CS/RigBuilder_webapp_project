@@ -80,7 +80,7 @@ public class AddSsdServlet extends HttpServlet {
                 List<String> capacities = ssddao.doRetrieveDistinctCapacities();
                 request.setAttribute("capacities", capacities);
                 request.setAttribute("pcie_gens", pcie_gens);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addSsd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addSsd.jsp?alreadyExists=1");
                 request.setAttribute("alreadyExists", 1);
                 rd.forward(request, response);
             }
@@ -89,7 +89,7 @@ public class AddSsdServlet extends HttpServlet {
             List<String> capacities = ssddao.doRetrieveDistinctCapacities();
             request.setAttribute("capacities", capacities);
             request.setAttribute("pcie_gens", pcie_gens);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addSsd.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/results/addSsd.jsp?formError=1");
             request.setAttribute("formError", 1);
             rd.forward(request, response);
         }
