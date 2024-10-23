@@ -234,12 +234,37 @@ create table Cooler(
     shop_url varchar(2048) not null,
     image_url varchar(2048) not null,
     tdp int not null,
-    socket varchar(40) not null,
+    socket varchar(300) not null,
     rpm int not null,
     noise_level int not null,
     radiator_size int,
     cooler_height int
 );
+insert into Cooler values
+(1,
+"NZXT Kraken 360 RGB Processeur Refroidisseur de liquide tout-en-un 12 cm Blanc 1 pièce(s)",
+4.4,
+222.1,
+"https://www.amazon.it/NZXT-Processeur-Refroidisseur-liquide-tout-en/dp/B0BNYQC95P/ref=sr_1_1_sspa?crid=1J7D5XDILGYPE&dib=eyJ2IjoiMSJ9.Z-HIiXlF0ElHpGCnCvMPNwm8UWMm1jQS5LXlruCGsA5RmtsAc_xlgRY8xd99Xx8Eac7UmDmwiajLz9QHi8iIYlCsTCRPsI4eiQ9uhoVKELPWfF_xPh3X4xf_5qcaFBgaIsa2fiAArpOMjm5yvOKFKKMIKHQbuEalYL46N0SPphftdgtXYMa7dQhz8Jm1eKYraHksNhoSn-KdgDwzOFHkfKsecoEZT-vk-vzw1oO3-d5sjIyIVNidfeGh6y_BfVr8.gU7qI_nYzG-Mp6e-AHcebS21l3Y1mhAVTVjXDgETJQU&dib_tag=se&keywords=nzxt+kraken+x73&qid=1729688907&sprefix=nzxt+kraken+x%2Caps%2C272&sr=8-1-spons&ufe=INHOUSE_INSTALLMENTS%3AIT_IHI_5M_VF&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
+"https://m.media-amazon.com/images/I/41K2nMA4QZL._AC_SX522_.jpg",
+25,
+"LGA 1851/LGA 1700/LGA 1200/LGA 1150/LGA 1151/LGA 1155/LGA 1156/AM5/AM4/sTR4/sTR5/sTRX4/TR4/sWRX8",
+2800,
+34,
+360,
+null),
+(2,
+"be quiet! Pure Rock 2 Black, CPU Cooler Raffreddatore, 150W TDP, Pure Wings 2 120mm PWM,4 6mm Heatpipes, design asimmetrico, torre singola, BK007",
+4.7,
+42,
+"https://www.amazon.it/quiet-Raffreddatore-Heatpipes-asimmetrico-BK007/dp/B087VL2Z21/ref=sr_1_12?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1NWNWPFZ2RVKV&dib=eyJ2IjoiMSJ9.KsiLMzTdQCvX4en6Ntq4Mo5eSrP0QsWQE9lVy2ElxslK3Se5qKrjBOIsTJpfiBVTohmjgotpW2-2LplchBXDKCmhYIhyPmqznhGlA95mfv7fQq79l7WvYL_i2YtzAS2AdJoL4gUJbd0_16LqNCwBacaORtS8uNC_qICEhZt7oqCcyHSOyWAcyXzj7sMkiXjLUy14WET3DEa1OnrvGcq9z_TsBQ4KYb5JiAl-PvJWfi581jaez65T1FwLexi1tfkE4NfAmoQOT8DGPG-mzItfP7Q8u49s0xJEis-t9oqVP5I.6uWnkDIp_NaBKmTHDErKKLOYZx7j9crfiCF9xN2ie5E&dib_tag=se&keywords=cpu%2Bair%2Bfractal%2Bcooler&qid=1729688931&sprefix=cpu%2Bair%2Bfractal%2Bcooler%2Caps%2C133&sr=8-12&th=1",
+"https://m.media-amazon.com/images/I/71Vdg3j2o1L._AC_SX679_.jpg",
+15,
+"LGA 1700/LGA 1200/LGA 2066/LGA 1150/LGA 1151/LGA 1155/LGA 1156/AM5/AM4",
+1500,
+23.8,
+null,
+155);
 
 #PSU(id, name, rating, price, shop_URL, image_URL, TDP, type, efficiency, wattage, lenght)
 create table PSU(

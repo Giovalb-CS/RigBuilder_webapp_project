@@ -91,8 +91,8 @@ public class VisualizeSsds extends HttpServlet {
                     maxPriceVal,
                     minRatingVal,
                     maxRatingVal,
-                    compositeCapacity,
-                    compositePCIeGen
+                    compositeCapacity != null && !compositeCapacity.isEmpty() ? compositeCapacity : null,
+                    compositePCIeGen != null && !compositePCIeGen.isEmpty() ? compositePCIeGen : null
             );
         }
 

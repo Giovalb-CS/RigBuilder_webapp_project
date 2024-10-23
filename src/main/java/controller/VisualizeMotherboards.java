@@ -109,10 +109,10 @@ public class VisualizeMotherboards extends HttpServlet {
                     maxRatingVal,
                     minPriceVal,
                     maxPriceVal,
-                    compositeSocket,
-                    compositeChipset,
-                    compositeRamType,
-                    compositeFormFactor
+                    compositeSocket != null && !compositeSocket.isEmpty() ? compositeSocket : null,
+                    compositeChipset != null && !compositeChipset.isEmpty() ? compositeChipset : null,
+                    compositeRamType != null && !compositeRamType.isEmpty() ? compositeRamType : null,
+                    compositeFormFactor != null && !compositeFormFactor.isEmpty() ? compositeFormFactor : null
             );
         }
         request.setAttribute("motherboards", motherboards);

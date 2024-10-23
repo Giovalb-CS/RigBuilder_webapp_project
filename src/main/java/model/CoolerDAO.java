@@ -2,7 +2,9 @@ package model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CoolerDAO {
     public Cooler doRetrieveByID(int id) {
@@ -38,10 +40,24 @@ public class CoolerDAO {
         try {
             List<Cooler> coolers = new ArrayList<>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
-            ResultSet resultSet = preparedStatement.executeQuery();
 
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM cooler WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Cooler cooler = new Cooler();
                 cooler.setId(resultSet.getInt("id"));
@@ -301,12 +317,12 @@ public class CoolerDAO {
         return coolers;
     }
 
-    public List<Cooler> doRetrieveAllByRadiatorSize(int minRadiatorSize) {
+    public List<Cooler> doRetrieveAllByRadiatorSize(int radiatorSize) {
         List<Cooler> coolers = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE radiator_size >= ?");
-            preparedStatement.setInt(1, minRadiatorSize);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE cooler_height IS NULL AND radiator_size IS NOT NULL AND radiator_size = ?");
+            preparedStatement.setInt(1, radiatorSize);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -331,12 +347,12 @@ public class CoolerDAO {
         return coolers;
     }
 
-    public List<Cooler> doRetrieveAllByCoolerHeight(int minCoolerHeight) {
+    public List<Cooler> doRetrieveAllByMaxCoolerHeight(int maxCoolerHeight) {
         List<Cooler> coolers = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE cooler_height >= ?");
-            preparedStatement.setInt(1, minCoolerHeight);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Cooler WHERE cooler_height IS NOT NULL AND radiator_size IS NULL AND cooler_height <= ?");
+            preparedStatement.setInt(1, maxCoolerHeight);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -361,7 +377,7 @@ public class CoolerDAO {
         return coolers;
     }
 
-    public List<Cooler> doRetrieveFiltered(Integer minRating, Integer maxRating, Double minPrice, Double maxPrice, Integer minCoolerHeight, Integer minRadiatorSize, String socket) {
+    public List<Cooler> doRetrieveFiltered(Double minRating, Double maxRating, Double minPrice, Double maxPrice, Integer minCoolerHeight, Integer maxCoolerHeight, Integer radiatorSize, String socket) {
         List<Cooler> coolerList = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
@@ -383,8 +399,11 @@ public class CoolerDAO {
             if (minCoolerHeight != null) {
                 query.append(" AND cooler_height >= ?");
             }
-            if (minRadiatorSize != null) {
-                query.append(" AND radiator_size >= ?");
+            if (maxCoolerHeight != null) {
+                query.append(" AND cooler_height <= ?");
+            }
+            if (radiatorSize != null) {
+                query.append(" AND radiator_size <= ?");
             }
             if (socket != null && !socket.isEmpty()) {
                 query.append(" AND socket LIKE ?");
@@ -395,10 +414,10 @@ public class CoolerDAO {
             // impostazione parametri query
             int paramIndex = 1;
             if (minRating != null) {
-                preparedStatement.setInt(paramIndex++, minRating);
+                preparedStatement.setDouble(paramIndex++, minRating);
             }
             if (maxRating != null) {
-                preparedStatement.setInt(paramIndex++, maxRating);
+                preparedStatement.setDouble(paramIndex++, maxRating);
             }
             if (minPrice != null) {
                 preparedStatement.setDouble(paramIndex++, minPrice);
@@ -409,8 +428,11 @@ public class CoolerDAO {
             if (minCoolerHeight != null) {
                 preparedStatement.setInt(paramIndex++, minCoolerHeight);
             }
-            if (minRadiatorSize != null) {
-                preparedStatement.setInt(paramIndex++, minRadiatorSize);
+            if (maxCoolerHeight != null) {
+                preparedStatement.setInt(paramIndex++, maxCoolerHeight);
+            }
+            if (radiatorSize != null) {
+                preparedStatement.setInt(paramIndex++, radiatorSize);
             }
             if (socket != null && !socket.isEmpty()) {
                 preparedStatement.setString(paramIndex++, "%" + socket + "%");
@@ -440,7 +462,7 @@ public class CoolerDAO {
         return coolerList;
     }
 
-    public void doSave(Cooler cooler) {
+    public int doSave(Cooler cooler) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Cooler (name, rating, price, shop_url, image_url, tdp, socket, rpm, noise_level, radiator_size, cooler_height) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -455,10 +477,16 @@ public class CoolerDAO {
             preparedStatement.setInt(9, cooler.getNoise_level());
             preparedStatement.setInt(10, cooler.getRadiator_size());
             preparedStatement.setInt(11, cooler.getCooler_height());
+
             if (preparedStatement.executeUpdate() != 1) throw new RuntimeException("INSERT error.");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            cooler.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                cooler.setId(generatedId);
+                return generatedId; // Restituisci l'ID generato
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -495,5 +523,40 @@ public class CoolerDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> doRetrieveDistinctSockets() {
+        Set<String> uniqueSockets = new HashSet<>();
+        String sql = "SELECT socket FROM cooler";
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String socketStr = rs.getString("socket");
+                String[] socketArray = socketStr.split("/");
+                for (String socket : socketArray) {
+                    uniqueSockets.add(socket);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>(uniqueSockets);
+    }
+
+    public List<String> doRetrieveDistinctRadiatorSizes() {
+        List<String> radiatorSizes = new ArrayList<>();
+        String sql = "SELECT DISTINCT radiator_size FROM cooler WHERE radiator_size IS NOT NULL ";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                radiatorSizes.add(rs.getString("radiator_size"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return radiatorSizes;
     }
 }

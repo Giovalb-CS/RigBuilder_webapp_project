@@ -42,17 +42,17 @@
                 <p>MOBOs</p>
             </button>
 
-            <button class="cat-cooler" type="submit" formaction="" formmethod="post">
+            <button class="cat-cooler" type="submit" formaction="coolers" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/cooler.png" alt="cooler">
                 <p>Coolers</p>
             </button>
 
-            <button class="cat-psu" type="submit" formaction="" formmethod="post">
+            <button class="cat-psu" type="submit" formaction="psus" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/psu.png" alt="psu">
                 <p>PSUs</p>
             </button>
 
-            <button class="cat-casebox" type="submit" formaction="" formmethod="post">
+            <button class="cat-casebox" type="submit" formaction="cases" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/casebox.png" alt="casebox">
                 <p>Cases</p>
             </button>
