@@ -78,3 +78,19 @@
         width: 100%;
     }
 }
+
+/* Stili per la visualizzazione delle socket selezionate */
+.socket-tag {
+    display: inline-block;
+    border: 0.1em rgba(255, 255, 255, 0.18) solid;
+    border-radius: 1em;
+    box-shadow: 0.2em 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.19);
+    padding: 0.3em 0.5em;
+    margin: 0.5em;
+}
+
+.socket-tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}

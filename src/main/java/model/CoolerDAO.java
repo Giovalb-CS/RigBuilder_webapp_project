@@ -475,8 +475,20 @@ public class CoolerDAO {
             preparedStatement.setString(7, cooler.getSocket());
             preparedStatement.setInt(8, cooler.getRpm());
             preparedStatement.setInt(9, cooler.getNoise_level());
-            preparedStatement.setInt(10, cooler.getRadiator_size());
-            preparedStatement.setInt(11, cooler.getCooler_height());
+            Integer radiatorSize = cooler.getRadiator_size();
+            Integer coolerHeight = cooler.getCooler_height();
+
+            if (radiatorSize != null) {
+                preparedStatement.setInt(10, radiatorSize);
+            } else {
+                preparedStatement.setNull(10, java.sql.Types.INTEGER);
+            }
+
+            if (coolerHeight != null) {
+                preparedStatement.setInt(11, coolerHeight);
+            } else {
+                preparedStatement.setNull(11, java.sql.Types.INTEGER);
+            }
 
             if (preparedStatement.executeUpdate() != 1) throw new RuntimeException("INSERT error.");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -505,8 +517,19 @@ public class CoolerDAO {
             preparedStatement.setString(7, cooler.getSocket());
             preparedStatement.setInt(8, cooler.getRpm());
             preparedStatement.setInt(9, cooler.getNoise_level());
-            preparedStatement.setInt(10, cooler.getRadiator_size());
-            preparedStatement.setInt(11, cooler.getCooler_height());
+            Integer radiatorSize = cooler.getRadiator_size();
+            Integer coolerHeight = cooler.getCooler_height();
+            if (radiatorSize != null) {
+                preparedStatement.setInt(10, radiatorSize);
+            } else {
+                preparedStatement.setNull(10, java.sql.Types.INTEGER);
+            }
+
+            if (coolerHeight != null) {
+                preparedStatement.setInt(11, coolerHeight);
+            } else {
+                preparedStatement.setNull(11, java.sql.Types.INTEGER);
+            }
             preparedStatement.setInt(12, cooler.getId());
             if (preparedStatement.executeUpdate() != 1) throw new RuntimeException("UPDATE error.");
         } catch (SQLException e) {

@@ -13,8 +13,8 @@ public class Cooler {
     private String socket;
     private int rpm;
     private int noise_level;
-    private int radiator_size;
-    private int cooler_height;
+    private Integer radiator_size;
+    private Integer cooler_height;
 
     public Cooler() {
     }
@@ -99,19 +99,19 @@ public class Cooler {
         this.noise_level = noise_level;
     }
 
-    public int getRadiator_size() {
+    public Integer getRadiator_size() {
         return radiator_size;
     }
 
-    public void setRadiator_size(int radiator_size) {
+    public void setRadiator_size(Integer radiator_size) {
         this.radiator_size = radiator_size;
     }
 
-    public int getCooler_height() {
+    public Integer getCooler_height() {
         return cooler_height;
     }
 
-    public void setCooler_height(int cooler_height) {
+    public void setCooler_height(Integer cooler_height) {
         this.cooler_height = cooler_height;
     }
 
@@ -120,7 +120,7 @@ public class Cooler {
         if (this == o) return true;
         if (!(o instanceof Cooler)) return false;
         Cooler cooler = (Cooler) o;
-        return Double.compare(getRating(), cooler.getRating()) == 0 && Double.compare(getPrice(), cooler.getPrice()) == 0 && getTdp() == cooler.getTdp() && getRpm() == cooler.getRpm() && getNoise_level() == cooler.getNoise_level() && getRadiator_size() == cooler.getRadiator_size() && getCooler_height() == cooler.getCooler_height() && Objects.equals(getName(), cooler.getName()) && Objects.equals(getShop_URL(), cooler.getShop_URL()) && Objects.equals(getImage_URL(), cooler.getImage_URL()) && Objects.equals(getSocket(), cooler.getSocket());
+        return Double.compare(getRating(), cooler.getRating()) == 0 && Double.compare(getPrice(), cooler.getPrice()) == 0 && getTdp() == cooler.getTdp() && getRpm() == cooler.getRpm() && getNoise_level() == cooler.getNoise_level() && Objects.equals(getRadiator_size(), cooler.getRadiator_size()) && Objects.equals(getCooler_height(), cooler.getCooler_height()) && Objects.equals(getName(), cooler.getName()) && Objects.equals(getShop_URL(), cooler.getShop_URL()) && Objects.equals(getImage_URL(), cooler.getImage_URL()) && Objects.equals(getSocket(), cooler.getSocket());
     }
 
     @Override

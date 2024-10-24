@@ -69,7 +69,6 @@
         </div>
 
         <div class="filters-container">
-            <p style="flex:1">Please, remember to use radiator size only for liquid coolers and cooler height only for air coolers. There's no such cooler with both attributes in the database.</p>
             <!-- Sezione filtri singoli -->
             <div class="main-filters-container">
                 <p>Single filters</p>
@@ -192,6 +191,8 @@
             <form class="filter-reset-button-container" action="coolers" method="get">
                 <button type="submit"><i class="fa fa-refresh" aria-hidden="true"></i>Reset</button>
             </form>
+
+            <p style="flex: 1">Please, remember to use radiator size only for liquid coolers and cooler height only for air coolers. There's no such cooler with both attributes in the database.</p>
         </div>
 
         <div class="list-container">
@@ -251,6 +252,11 @@
                     <div class="group-container">
                         <p class="group-label">Cooler height</p>
                         <p class="group-content"><%=cooler.getCooler_height()%>mm</p>
+                    </div>
+                    <%} else {%>
+                    <div class="group-container">
+                        <p class="group-label">Radiator/Cooler</p>
+                        <p class="group-content">Data Error<%=cooler.getRadiator_size()%><%=cooler.getCooler_height()%></p>
                     </div>
                     <%}%>
                 </div>

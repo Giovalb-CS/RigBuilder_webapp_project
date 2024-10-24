@@ -47,4 +47,17 @@ public class GestireCoolerDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireCooler gestireCooler) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestirecooler (idAdmin, idCooler) values (?,?)");
+            preparedStatement.setInt(1, gestireCooler.getIdAdmin());
+            preparedStatement.setInt(2, gestireCooler.getIdCooler());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
