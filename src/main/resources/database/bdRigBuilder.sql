@@ -274,12 +274,32 @@ create table PSU(
     price double not null,
     shop_url varchar(2048) not null,
     image_url varchar(2048) not null,
-    tdp int not null,
     type varchar(20) not null,
     efficiency varchar(20) not null,
     wattage int not null,
     lenght int not null
 );
+insert into PSU values
+(1,
+"Cooler Master MWE 850 Gold V2 Alimentatore Completamente Modulare (Spina UE) - Alimentatore 80 PLUS Gold da 850W, Cavi Piatti Neri, Ventola HDB da 120mm, Soglia Alta Temperatura",
+4.7,
+115.9,
+"https://www.amazon.it/Cooler-Master-Gold-Completamente-modulare/dp/B08BKPG3BH/ref=sr_1_3_sspa?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1MMCLPC1LD5O4&dib=eyJ2IjoiMSJ9.Ok5b3ZSRhfT8RxtuzdA8bgeoHdxzxl3CqWvZ05Dp-Wgv2_5i5fMBJsOcAaL1tEzBX3YuUNeyEHqNdMkIAJ8sj10GzIGyFHFpVPc61RgOBOQDqp5iEcVsP_CMrTqQUSAZb368MwcYg5lb0QMgUCE0hv3YgvRx3PlqS_6vFZGOZQxeDT-pvVPGvY15VnmUWJIPz8MVBGXieADDz5yQdmgI5DrjaUJBa4LQF1WEOUDENDAC-_lLhSVHXllVQj3oyOR0K_i9nkm09nWEFHQ_6x12YXI2d-ilarmHFuuQ6M0unJ0.XxipnzgEhUhoagpsaU4k07kQPi7IZrSGcMEoRSNkXPg&dib_tag=se&keywords=alimentatore+pc&qid=1729858813&sprefix=alimentatore+p%2Caps%2C182&sr=8-3-spons&ufe=INHOUSE_INSTALLMENTS%3AIT_IHI_5M_AUTOMATED&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
+"https://m.media-amazon.com/images/I/914bcic6EkL._AC_SX522_.jpg",
+"Fully Modular",
+"80+ Gold",
+850,
+14),
+(2,
+"Corsair HX1000i Alimentatore ATX Completamente Modulare ed Estremamente Silenzioso - Compatibile con ATX 3.0 e PCIe 5.0 - Compatibile con il Software Corsair iCUE - Efficienza 80 Plus Platinum - Nero",
+4.6,
+238.5,
+"https://www.amazon.it/Corsair-Alimentatore-Completamente-Estremamente-Silenzioso/dp/B0C4B8BWM3/ref=sr_1_44?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1MMCLPC1LD5O4&dib=eyJ2IjoiMSJ9.Ok5b3ZSRhfT8RxtuzdA8bgeoHdxzxl3CqWvZ05Dp-Wgv2_5i5fMBJsOcAaL1tEzBX3YuUNeyEHqNdMkIAJ8sj10GzIGyFHFpVPc61RgOBOQDqp5iEcVsP_CMrTqQUSAZb368MwcYg5lb0QMgUCE0hv3YgvRx3PlqS_6vFZGOZQxeDT-pvVPGvY15VnmUWJIPz8MVBGXieADDz5yQdmgI5DrjaUJBa4LQF1WEOUDENDAC-_lLhSVHXllVQj3oyOR0K_i9nkm09nWEFHQ_6x12YXI2d-ilarmHFuuQ6M0unJ0.XxipnzgEhUhoagpsaU4k07kQPi7IZrSGcMEoRSNkXPg&dib_tag=se&keywords=alimentatore+pc&qid=1729858813&sprefix=alimentatore+p%2Caps%2C182&sr=8-44&ufe=INHOUSE_INSTALLMENTS%3AIT_IHI_5M_AUTOMATED",
+"https://m.media-amazon.com/images/I/81oi663aTXL._AC_SX679_.jpg",
+"Fully Modular",
+"80+ Platinum",
+1000,
+18);
 
 #Case(id, name, rating, price, shop_URL, image_URL, max_cooler_height, radiator_size, gpu_lenght, form_factor, psu_lenght, PCIe_slots)
 create table CaseBox(

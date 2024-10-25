@@ -47,4 +47,17 @@ public class GestirePSUDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestirePSU gestirePSU) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestirepsu (idAdmin, idPSU) values (?,?)");
+            preparedStatement.setInt(1, gestirePSU.getIdAdmin());
+            preparedStatement.setInt(2, gestirePSU.getIdPSU());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

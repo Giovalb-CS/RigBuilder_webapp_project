@@ -74,7 +74,7 @@
                     <option value="<%= socket %>">
                             <% } %>
                 </datalist>
-                <div id="selectedSocketsContainer"></div>
+                <div id="selectedSocketsContainer"><p>If on mobile, when typed a new socket, click here to add it!</p></div>
                 <input type="hidden" id="socket" name="socket">
             </div>
             <script src="${pageContext.request.contextPath}/js/socketSelection.js"></script>

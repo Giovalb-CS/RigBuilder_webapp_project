@@ -94,3 +94,14 @@
     border: none;
     cursor: pointer;
 }
+
+#selectedSocketsContainer {
+    border: 0.1em rgba(255, 255, 255, 0.11) solid;
+    border-radius: 1.2em;
+    min-height: 2.3em;
+}
+
+#selectedSocketsContainer p {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.22);
+}

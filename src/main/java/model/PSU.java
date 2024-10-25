@@ -9,7 +9,6 @@ public class PSU {
     private double price;
     private String shop_URL;
     private String image_URL;
-    private int tdp;
     private String type;
     private String efficiency;
     private int wattage;
@@ -66,14 +65,6 @@ public class PSU {
         this.image_URL = image_URL;
     }
 
-    public int getTdp() {
-        return tdp;
-    }
-
-    public void setTdp(int tdp) {
-        this.tdp = tdp;
-    }
-
     public String getType() {
         return type;
     }
@@ -107,19 +98,6 @@ public class PSU {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PSU)) return false;
-        PSU psu = (PSU) o;
-        return Double.compare(getRating(), psu.getRating()) == 0 && Double.compare(getPrice(), psu.getPrice()) == 0 && getTdp() == psu.getTdp() && getWattage() == psu.getWattage() && getLenght() == psu.getLenght() && Objects.equals(getName(), psu.getName()) && Objects.equals(getShop_URL(), psu.getShop_URL()) && Objects.equals(getImage_URL(), psu.getImage_URL()) && Objects.equals(getType(), psu.getType()) && Objects.equals(getEfficiency(), psu.getEfficiency());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getTdp(), getType(), getEfficiency(), getWattage(), getLenght());
-    }
-
-    @Override
     public String toString() {
         return "PSU{" +
                 "id=" + id +
@@ -128,11 +106,23 @@ public class PSU {
                 ", price=" + price +
                 ", shop_URL='" + shop_URL + '\'' +
                 ", image_URL='" + image_URL + '\'' +
-                ", tdp=" + tdp +
                 ", type='" + type + '\'' +
                 ", efficiency='" + efficiency + '\'' +
                 ", wattage=" + wattage +
                 ", lenght=" + lenght +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PSU)) return false;
+        PSU psu = (PSU) o;
+        return getId() == psu.getId() && Double.compare(getRating(), psu.getRating()) == 0 && Double.compare(getPrice(), psu.getPrice()) == 0 && getWattage() == psu.getWattage() && getLenght() == psu.getLenght() && Objects.equals(getName(), psu.getName()) && Objects.equals(getShop_URL(), psu.getShop_URL()) && Objects.equals(getImage_URL(), psu.getImage_URL()) && Objects.equals(getType(), psu.getType()) && Objects.equals(getEfficiency(), psu.getEfficiency());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getRating(), getPrice(), getShop_URL(), getImage_URL(), getType(), getEfficiency(), getWattage(), getLenght());
     }
 }
