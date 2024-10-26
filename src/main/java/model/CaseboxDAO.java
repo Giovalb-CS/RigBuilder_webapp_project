@@ -2,7 +2,9 @@ package model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CaseboxDAO {
     public Casebox doRetrieveByID(int id) {
@@ -17,7 +19,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -39,16 +41,29 @@ public class CaseboxDAO {
         try {
             List<Casebox> caseboxList = new ArrayList<Casebox>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where name like ?");
-            preparedStatement.setString(1, "%" + name + "%");
+
+            String[] keywords = name.split("\\s+");
+
+            StringBuilder sql = new StringBuilder("SELECT DISTINCT * FROM casebox WHERE ");
+            for (int i = 0; i < keywords.length; i++) {
+                sql.append("name LIKE ?");
+                if (i < keywords.length - 1) {
+                    sql.append(" AND ");
+                }
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < keywords.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keywords[i] + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -77,7 +92,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -106,7 +121,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -135,7 +150,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -166,7 +181,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -195,7 +210,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -224,7 +239,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -255,7 +270,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -286,7 +301,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -317,7 +332,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -348,7 +363,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -370,15 +385,15 @@ public class CaseboxDAO {
         try {
             List<Casebox> caseboxList = new ArrayList<Casebox>();
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where form_factor = ?");
-            preparedStatement.setString(1, formFactor);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where form_factor LIKE ?");
+            preparedStatement.setString(1, "%" + formFactor + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -409,7 +424,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -440,7 +455,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -458,7 +473,7 @@ public class CaseboxDAO {
         return caseboxList;
     }
 
-    public List<Casebox> doRetrieveFiltered(Integer minRating, Integer maxRating, Double minPrice, Double maxPrice, Integer minCoolerHeight, Integer minRadiatorSize, Integer minGPULength, String formFactor, Integer minPSULength, Integer minPCIeSlots) {
+    public List<Casebox> doRetrieveFiltered(Double minRating, Double maxRating, Double minPrice, Double maxPrice, Integer minCoolerHeight, Integer minRadiatorSize, Integer minGPULength, String formFactor, Integer minPSULength, Integer minPCIeSlots) {
         List<Casebox> caseboxList = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
@@ -487,7 +502,7 @@ public class CaseboxDAO {
                 query.append(" AND gpu_lenght >= ?");
             }
             if (formFactor != null && !formFactor.isEmpty()) {
-                query.append(" AND form_factor = ?");
+                query.append(" AND form_factor LIKE ?");
             }
             if (minPSULength != null) {
                 query.append(" AND psu_lenght >= ?");
@@ -501,10 +516,10 @@ public class CaseboxDAO {
             // impostazione parametri query
             int paramIndex = 1;
             if (minRating != null) {
-                preparedStatement.setInt(paramIndex++, minRating);
+                preparedStatement.setDouble(paramIndex++, minRating);
             }
             if (maxRating != null) {
-                preparedStatement.setInt(paramIndex++, maxRating);
+                preparedStatement.setDouble(paramIndex++, maxRating);
             }
             if (minPrice != null) {
                 preparedStatement.setDouble(paramIndex++, minPrice);
@@ -522,7 +537,7 @@ public class CaseboxDAO {
                 preparedStatement.setInt(paramIndex++, minGPULength);
             }
             if (formFactor != null && !formFactor.isEmpty()) {
-                preparedStatement.setString(paramIndex++, formFactor);
+                preparedStatement.setString(paramIndex++, "%" + formFactor + "%");
             }
             if (minPSULength != null) {
                 preparedStatement.setInt(paramIndex++, minPSULength);
@@ -537,7 +552,7 @@ public class CaseboxDAO {
                 Casebox casebox = new Casebox();
                 casebox.setId(resultSet.getInt("id"));
                 casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getInt("rating"));
+                casebox.setRating(resultSet.getDouble("rating"));
                 casebox.setPrice(resultSet.getDouble("price"));
                 casebox.setShop_URL(resultSet.getString("shop_URL"));
                 casebox.setImage_URL(resultSet.getString("image_URL"));
@@ -556,7 +571,7 @@ public class CaseboxDAO {
         return caseboxList;
     }
 
-    public void doSave(Casebox casebox) {
+    public int doSave(Casebox casebox) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into casebox (name, rating, price, shop_url, image_url, max_cooler_height, radiator_size, gpu_lenght, form_factor, psu_lenght, pcie_slots) values (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -574,8 +589,13 @@ public class CaseboxDAO {
 
             if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            casebox.setId(resultSet.getInt("id"));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                casebox.setId(generatedId);
+                return generatedId; // Restituisci l'ID generato
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -618,5 +638,38 @@ public class CaseboxDAO {
         }
     }
 
+    public List<String> doRetrieveDistinctRadiatorSizes() {
+        List<String> radiatorSizes = new ArrayList<>();
+        String sql = "SELECT DISTINCT radiator_size FROM casebox";
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                radiatorSizes.add(rs.getString("radiator_size"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return radiatorSizes;
+    }
 
+    public List<String> doRetrieveDistinctFormFactors() {
+        Set<String> uniqueFormFactors = new HashSet<>();
+        String sql = "SELECT form_factor FROM casebox";
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String formFactorStr = rs.getString("form_factor");
+                String[] formFactorArray = formFactorStr.split("/");
+                for (String formFactor : formFactorArray) {
+                    uniqueFormFactors.add(formFactor);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>(uniqueFormFactors);
+    }
 }

@@ -312,10 +312,35 @@ create table CaseBox(
     max_cooler_height int not null,
     radiator_size int not null,
     gpu_lenght int not null,
-    form_factor varchar(20) not null,
+    form_factor varchar(50) not null,
     psu_lenght int not null,
     pcie_slots int not null
 );
+insert into CaseBox values
+(1,
+"Cooler Master TD300 Case PC Mesh - Mini-Tower,Elevato Flusso d'Aria, 2 x 120mm Ventole ARGB,Supporto MB Micro-ATX e Mini-ITX,Pannello Laterale in Vetro Temperato,Coperchio Rimovibile,Hub ARGB/PWM",
+4.6,
+86.1,
+"https://www.amazon.it/Cooler-Master-TD300-Case-Mesh/dp/B09J4WN98H/ref=sr_1_5?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1BO7CPXEBST7Z&dib=eyJ2IjoiMSJ9.sjO6UHFdnbXtn79YHCnQkNnqErtoMCmUd9KVII8mCWQUCAVoxH2uMzbNyJD0HZUX9JKxU3WXD5vketRlOdcebziwnUOayzO6OFmd0czjNvTq8mvfOMpCBDHfJ-y2EfGwTLQmDgF4rHOxSyWz2uU-piw-2G0FxxjF30gFcC_RUBSlDe08KK5Hcs_ZiDjhgvnrL73O4AHA3dLp8OndSpH6M5yDzknFSPoGLhF_MXCWeu6FI9zzoCOPhLHAt9LkizHYbVyiV2rW5S9HmmyZ80HxDUotANQouHXd3KADZPckOuo.A2Z-R4uGO8pDE9R_Pjz0yZQIqgGjqcB76bsxl7xe_wk&dib_tag=se&keywords=cooler+master+td300&qid=1729949816&sprefix=cooler+master+td30%2Caps%2C145&sr=8-5",
+"https://m.media-amazon.com/images/I/81jk11GK7EL._AC_SX522_.jpg",
+166,
+280,
+344,
+"Micro-ATX/Mini-ITX",
+325,
+4),
+(2,
+"Lian Li O11 Vision Midi-Tower, Tempered Glass - weiß",
+4.6,
+183.7,
+"https://www.amazon.it/Lian-Vision-Midi-Tower-Tempered-Glass/dp/B0CNKXH73Q/ref=sr_1_2_mod_primary_new?__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=VHEORZDNWUVV&dib=eyJ2IjoiMSJ9.zYXukYpN6KfppbB9Z9JfN8Z47NFPoRRO8Jsa6jUBWzUCUslFHnrx0tsQ0Vcri5-Jnpf1HPfYuhyUBweblrzAFr9P6rRrOTUf6JwU9RbYC4Y7ro-1XWre4jcU6bh4pjcOfoy05u7heLPRpMZbnxbLq3-2R16ryHznGnHP_sOCZW-NbrlNS0_h0PFzucflNciM0euMuiUWtbDbjhul59JNj3sJ__I9RAyF_3vq1SHsbFCP8V6vY1OhWNItAaGzl0FIn58RGAOy7KzCJ2oqBBFjnAo71Ut-_GvoQNEcyXi-XYE.nZ8s79RTHJ2PACxGJvVivGR8JAfzMqFR30y_nAGN_8k&dib_tag=se&keywords=pc+case+lian+li&qid=1729949830&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=pc+case+lian%2Caps%2C325&sr=8-2",
+"https://m.media-amazon.com/images/I/81WPPF07bEL._AC_SX522_.jpg",
+174,
+360,
+430,
+"E-ATX/ATX/Micro-ATX/Mini-ITX",
+232,
+7);
 
 #GestireProcessor(idAdmin, idCPU)
 create table GestireProcessor(
