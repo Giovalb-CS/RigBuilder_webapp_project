@@ -47,4 +47,17 @@ public class GestireCaseboxDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doSave(GestireCasebox gestireCasebox) {
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into gestirecasebox (idAdmin, idCaseBox) values (?,?)");
+            preparedStatement.setInt(1, gestireCasebox.getIdAdmin());
+            preparedStatement.setInt(2, gestireCasebox.getIdCasebox());
+
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

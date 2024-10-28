@@ -80,7 +80,7 @@
 }
 
 /* Stili per la visualizzazione delle socket selezionate */
-.socket-tag {
+.socket-tag, .formFactor-tag {
     display: inline-block;
     border: 0.1em rgba(255, 255, 255, 0.18) solid;
     border-radius: 1em;
@@ -89,19 +89,19 @@
     margin: 0.5em;
 }
 
-.socket-tag button {
+.socket-tag button, .formFactor-tag button {
     background: none;
     border: none;
     cursor: pointer;
 }
 
-#selectedSocketsContainer {
+#selectedSocketsContainer, #selectedFormFactorsContainer {
     border: 0.1em rgba(255, 255, 255, 0.11) solid;
     border-radius: 1.2em;
     min-height: 2.3em;
 }
 
-#selectedSocketsContainer p {
+#selectedSocketsContainer p, #selectedFormFactorsContainer p {
     text-align: center;
     color: rgba(255, 255, 255, 0.22);
 }
