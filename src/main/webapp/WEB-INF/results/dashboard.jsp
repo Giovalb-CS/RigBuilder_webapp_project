@@ -16,6 +16,16 @@
         <%@include file="/WEB-INF/results/modules/isAdminLogged.jsp"%>
         <%@include file="/WEB-INF/results/modules/navbar.jsp"%>
 
+        <%if (request.getAttribute("userCreated")!=null){%>
+        <div class="messageContainer success">
+            <h3>New user <%=request.getAttribute("newUserID")%>: <%=request.getAttribute("newUserEmail")%> successfully created!</h3>
+        </div>
+        <%}%>
+
+        <form action="addAdmin" method="get" class="add-admin-container">
+            <button type="submit"><i class="fa fa-user-plus" aria-hidden="true"></i> Add a new administrator</button>
+        </form>
+
         <form class="categories">
             <button class="cat-cpu" type="submit" formaction="processors" formmethod="post">
                 <img src="${pageContext.request.contextPath}/images/pc-parts-icons/cpu.png" alt="cpu">

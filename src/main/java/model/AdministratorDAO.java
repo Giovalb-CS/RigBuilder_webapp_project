@@ -46,23 +46,25 @@ public class AdministratorDAO {
         return null;
     }
 
-    public boolean doSave(Administrator administrator) {
-        int b;
+    public int doSave(Administrator administrator) {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO administrator(email, pwd) VALUES(?, SHA1(?))", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, administrator.getEmail());
             preparedStatement.setString(2, administrator.getPwd());
 
-            b = preparedStatement.executeUpdate();
-
+            if(preparedStatement.executeUpdate()!= 1) throw  new RuntimeException("INSERT error");
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            administrator.setId(resultSet.getInt(1));
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                administrator.setId(generatedId);
+                return generatedId; // Restituisci l'ID generato
+            } else {
+                throw new RuntimeException("Failed to obtain ID.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return b==1;
     }
 
     public void doModifyPassword(Administrator administrator, String newPassword) {
