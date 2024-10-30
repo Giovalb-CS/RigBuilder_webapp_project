@@ -58,7 +58,7 @@ create table GPU(
     boost_clock int not null,
     lenght int not null,
     slot_width int not null,
-    power_cable varchar(15) not null
+    power_cable varchar(30) not null
 );
 insert into GPU values
 (1,

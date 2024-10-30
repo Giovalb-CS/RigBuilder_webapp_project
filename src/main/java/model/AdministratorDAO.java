@@ -49,7 +49,7 @@ public class AdministratorDAO {
     public int doSave(Administrator administrator) {
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO administrator(email, pwd) VALUES(?, SHA1(?))", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO administrator(email, pwd) VALUES(?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, administrator.getEmail());
             preparedStatement.setString(2, administrator.getPwd());
 
