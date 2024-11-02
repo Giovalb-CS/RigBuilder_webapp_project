@@ -99,7 +99,7 @@ create table RAM(
     shop_url varchar(2048) not null,
     image_url varchar(2048) not null,
     tdp int not null,
-    type varchar(8) not null,
+    type varchar(10) not null,
     clock int not null
 );
 insert into RAM values
@@ -131,8 +131,8 @@ create table SSD(
     shop_url varchar(2048) not null,
     image_url varchar(2048) not null,
     tdp int not null,
-    pcie_gen varchar(8) not null,
-    capacity varchar(6) not null,
+    pcie_gen varchar(10) not null,
+    capacity varchar(10) not null,
     speed_read int not null,
     speed_write int not null
 );
@@ -169,8 +169,8 @@ create table Motherboard(
     shop_url varchar(2048) not null,
     image_url varchar(2048) not null,
     tdp int not null,
-    socket varchar(20) not null,
-    chipset varchar(20) not null,
+    socket varchar(30) not null,
+    chipset varchar(30) not null,
     ram_type varchar(15) not null,
     ram_max_speed int not null,
     ram_slot int not null,
@@ -180,7 +180,7 @@ create table Motherboard(
     m2_slot int not null,
     sata_slot int not null,
     lan varchar(28) not null,
-    wifi varchar(8) not null,
+    wifi varchar(10) not null,
     form_factor varchar(20) not null
 );
 insert into Motherboard values
@@ -203,7 +203,7 @@ insert into Motherboard values
 4,
 "1x 1GB/s",
 "No",
-"micro ATX"),
+"Micro-ATX"),
 (2,
 "ASUS ROG STRIX B650-A GAMING WIFI Scheda Madre Gaming ATX, AMD B650, AM5, DDR5, 4xPCI 4.0, WiFi 6E (802.11ax), Intel 2.5Gb Ethernet, ROG SupremeFX 7.1, 3xM.2, 4xSATA 6GB/s, Aura Sync RGB, Nero",
 4.5,
