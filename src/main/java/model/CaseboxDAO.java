@@ -1,10 +1,7 @@
 package model;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CaseboxDAO {
     public Casebox doRetrieveByID(int id) {
@@ -382,34 +379,41 @@ public class CaseboxDAO {
     }
 
     public List<Casebox> doRetrieveAllByFormFactor(String formFactor) {
-        try {
-            List<Casebox> caseboxList = new ArrayList<Casebox>();
-            Connection connection = ConPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from casebox where form_factor LIKE ?");
+        List<Casebox> caseboxList = new ArrayList<>();
+        try (Connection connection = ConPool.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM casebox WHERE form_factor LIKE ?");
             preparedStatement.setString(1, "%" + formFactor + "%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Casebox casebox = new Casebox();
-                casebox.setId(resultSet.getInt("id"));
-                casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getDouble("rating"));
-                casebox.setPrice(resultSet.getDouble("price"));
-                casebox.setShop_URL(resultSet.getString("shop_URL"));
-                casebox.setImage_URL(resultSet.getString("image_URL"));
-                casebox.setMax_cooler_height(resultSet.getInt("max_cooler_height"));
-                casebox.setRadiator_size(resultSet.getInt("radiator_size"));
-                casebox.setGpu_lenght(resultSet.getInt("gpu_lenght"));
-                casebox.setForm_factor(resultSet.getString("form_factor"));
-                casebox.setPsu_lenght(resultSet.getInt("psu_lenght"));
-                casebox.setPcie_slots(resultSet.getInt("pcie_slots"));
-                caseboxList.add(casebox);
+                String dbFormFactor = resultSet.getString("form_factor");
+
+                // Filtro in Java per escludere risultati parziali
+                List<String> factors = Arrays.asList(dbFormFactor.split("/"));
+                if (factors.contains(formFactor)) {
+                    Casebox casebox = new Casebox();
+                    casebox.setId(resultSet.getInt("id"));
+                    casebox.setName(resultSet.getString("name"));
+                    casebox.setRating(resultSet.getDouble("rating"));
+                    casebox.setPrice(resultSet.getDouble("price"));
+                    casebox.setShop_URL(resultSet.getString("shop_URL"));
+                    casebox.setImage_URL(resultSet.getString("image_URL"));
+                    casebox.setMax_cooler_height(resultSet.getInt("max_cooler_height"));
+                    casebox.setRadiator_size(resultSet.getInt("radiator_size"));
+                    casebox.setGpu_lenght(resultSet.getInt("gpu_lenght"));
+                    casebox.setForm_factor(dbFormFactor);
+                    casebox.setPsu_lenght(resultSet.getInt("psu_lenght"));
+                    casebox.setPcie_slots(resultSet.getInt("pcie_slots"));
+                    caseboxList.add(casebox);
+                }
             }
-            return caseboxList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return caseboxList;
     }
+
 
     public List<Casebox> doRetrieveAllByPSULenght(int minPSULength) {
         List<Casebox> caseboxList = new ArrayList<>();
@@ -475,94 +479,59 @@ public class CaseboxDAO {
 
     public List<Casebox> doRetrieveFiltered(Double minRating, Double maxRating, Double minPrice, Double maxPrice, Integer minCoolerHeight, Integer minRadiatorSize, Integer minGPULength, String formFactor, Integer minPSULength, Integer minPCIeSlots) {
         List<Casebox> caseboxList = new ArrayList<>();
-        try {
-            Connection connection = ConPool.getConnection();
+        try (Connection connection = ConPool.getConnection()) {
             StringBuilder query = new StringBuilder("SELECT * FROM casebox WHERE 1=1");
 
-            // filtri dinamici
-            if (minRating != null) {
-                query.append(" AND rating >= ?");
-            }
-            if (maxRating != null) {
-                query.append(" AND rating <= ?");
-            }
-            if (minPrice != null) {
-                query.append(" AND price >= ?");
-            }
-            if (maxPrice != null) {
-                query.append(" AND price <= ?");
-            }
-            if (minCoolerHeight != null) {
-                query.append(" AND max_cooler_height >= ?");
-            }
-            if (minRadiatorSize != null) {
-                query.append(" AND radiator_size >= ?");
-            }
-            if (minGPULength != null) {
-                query.append(" AND gpu_lenght >= ?");
-            }
-            if (formFactor != null && !formFactor.isEmpty()) {
-                query.append(" AND form_factor LIKE ?");
-            }
-            if (minPSULength != null) {
-                query.append(" AND psu_lenght >= ?");
-            }
-            if (minPCIeSlots != null) {
-                query.append(" AND pcie_slots >= ?");
-            }
+            // Filtri dinamici
+            if (minRating != null) query.append(" AND rating >= ?");
+            if (maxRating != null) query.append(" AND rating <= ?");
+            if (minPrice != null) query.append(" AND price >= ?");
+            if (maxPrice != null) query.append(" AND price <= ?");
+            if (minCoolerHeight != null) query.append(" AND max_cooler_height >= ?");
+            if (minRadiatorSize != null) query.append(" AND radiator_size >= ?");
+            if (minGPULength != null) query.append(" AND gpu_lenght >= ?");
+            if (formFactor != null && !formFactor.isEmpty()) query.append(" AND form_factor LIKE ?");
+            if (minPSULength != null) query.append(" AND psu_lenght >= ?");
+            if (minPCIeSlots != null) query.append(" AND pcie_slots >= ?");
 
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 
-            // impostazione parametri query
+            // Impostazione parametri
             int paramIndex = 1;
-            if (minRating != null) {
-                preparedStatement.setDouble(paramIndex++, minRating);
-            }
-            if (maxRating != null) {
-                preparedStatement.setDouble(paramIndex++, maxRating);
-            }
-            if (minPrice != null) {
-                preparedStatement.setDouble(paramIndex++, minPrice);
-            }
-            if (maxPrice != null) {
-                preparedStatement.setDouble(paramIndex++, maxPrice);
-            }
-            if (minCoolerHeight != null) {
-                preparedStatement.setInt(paramIndex++, minCoolerHeight);
-            }
-            if (minRadiatorSize != null) {
-                preparedStatement.setInt(paramIndex++, minRadiatorSize);
-            }
-            if (minGPULength != null) {
-                preparedStatement.setInt(paramIndex++, minGPULength);
-            }
-            if (formFactor != null && !formFactor.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + formFactor + "%");
-            }
-            if (minPSULength != null) {
-                preparedStatement.setInt(paramIndex++, minPSULength);
-            }
-            if (minPCIeSlots != null) {
-                preparedStatement.setInt(paramIndex++, minPCIeSlots);
-            }
+            if (minRating != null) preparedStatement.setDouble(paramIndex++, minRating);
+            if (maxRating != null) preparedStatement.setDouble(paramIndex++, maxRating);
+            if (minPrice != null) preparedStatement.setDouble(paramIndex++, minPrice);
+            if (maxPrice != null) preparedStatement.setDouble(paramIndex++, maxPrice);
+            if (minCoolerHeight != null) preparedStatement.setInt(paramIndex++, minCoolerHeight);
+            if (minRadiatorSize != null) preparedStatement.setInt(paramIndex++, minRadiatorSize);
+            if (minGPULength != null) preparedStatement.setInt(paramIndex++, minGPULength);
+            if (formFactor != null && !formFactor.isEmpty()) preparedStatement.setString(paramIndex++, "%" + formFactor + "%");
+            if (minPSULength != null) preparedStatement.setInt(paramIndex++, minPSULength);
+            if (minPCIeSlots != null) preparedStatement.setInt(paramIndex++, minPCIeSlots);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Casebox casebox = new Casebox();
-                casebox.setId(resultSet.getInt("id"));
-                casebox.setName(resultSet.getString("name"));
-                casebox.setRating(resultSet.getDouble("rating"));
-                casebox.setPrice(resultSet.getDouble("price"));
-                casebox.setShop_URL(resultSet.getString("shop_URL"));
-                casebox.setImage_URL(resultSet.getString("image_URL"));
-                casebox.setMax_cooler_height(resultSet.getInt("max_cooler_height"));
-                casebox.setRadiator_size(resultSet.getInt("radiator_size"));
-                casebox.setGpu_lenght(resultSet.getInt("gpu_lenght"));
-                casebox.setForm_factor(resultSet.getString("form_factor"));
-                casebox.setPsu_lenght(resultSet.getInt("psu_lenght"));
-                casebox.setPcie_slots(resultSet.getInt("pcie_slots"));
-                caseboxList.add(casebox);
+                String dbFormFactor = resultSet.getString("form_factor");
+
+                // Filtraggio lato Java per corrispondenza esatta
+                List<String> factors = Arrays.asList(dbFormFactor.split("/"));
+                if (formFactor == null || formFactor.isEmpty() || factors.contains(formFactor)) {
+                    Casebox casebox = new Casebox();
+                    casebox.setId(resultSet.getInt("id"));
+                    casebox.setName(resultSet.getString("name"));
+                    casebox.setRating(resultSet.getDouble("rating"));
+                    casebox.setPrice(resultSet.getDouble("price"));
+                    casebox.setShop_URL(resultSet.getString("shop_URL"));
+                    casebox.setImage_URL(resultSet.getString("image_URL"));
+                    casebox.setMax_cooler_height(resultSet.getInt("max_cooler_height"));
+                    casebox.setRadiator_size(resultSet.getInt("radiator_size"));
+                    casebox.setGpu_lenght(resultSet.getInt("gpu_lenght"));
+                    casebox.setForm_factor(dbFormFactor);
+                    casebox.setPsu_lenght(resultSet.getInt("psu_lenght"));
+                    casebox.setPcie_slots(resultSet.getInt("pcie_slots"));
+                    caseboxList.add(casebox);
+                }
             }
 
         } catch (SQLException e) {

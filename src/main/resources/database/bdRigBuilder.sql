@@ -338,7 +338,7 @@ insert into CaseBox values
 174,
 360,
 430,
-"E-ATX/ATX/Micro-ATX/Mini-ITX",
+"EATX/ATX/Micro-ATX/Mini-ITX",
 232,
 7);
 
