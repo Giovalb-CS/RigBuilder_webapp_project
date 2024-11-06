@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 
 public class ProcessorFilterTest {
 
+    private static final String API_KEY = "1P9N112129";
+
     public static void post(){
         try {
             // Endpoint URL
@@ -20,12 +22,12 @@ public class ProcessorFilterTest {
             // Creazione del JSON dei parametri di filtro
             Gson gson = new Gson();
             JsonObject filterParams = new JsonObject();
-            filterParams.addProperty("minPrice", 100.0);     // Prezzo minimo
-            filterParams.addProperty("maxPrice", 500.0);     // Prezzo massimo
-            filterParams.addProperty("socket", "LGA 1700");       // Tipo di socket
-            filterParams.addProperty("ramType", "DDR5");     // Tipo di RAM
-            filterParams.addProperty("minRating", 3.0);      // Valutazione minima
-            filterParams.addProperty("maxRating", 5.0);      // Valutazione massima
+//            filterParams.addProperty("minPrice", 100.0);
+//            filterParams.addProperty("maxPrice", 500.0);
+            filterParams.addProperty("socket", "LGA 1700");
+            filterParams.addProperty("ramType", "DDR5");
+            filterParams.addProperty("minRating", 3.0);
+            filterParams.addProperty("maxRating", 5.0);
 
             // Converte in JSON
             String jsonInputString = gson.toJson(filterParams);
@@ -36,6 +38,7 @@ public class ProcessorFilterTest {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("X-API-KEY", API_KEY);
             conn.setDoOutput(true);
 
             // Invia i dati JSON
@@ -71,6 +74,7 @@ public class ProcessorFilterTest {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET"); // Use GET instead of POST
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("X-API-KEY", API_KEY);
 
             // Leggi la risposta
             int responseCode = conn.getResponseCode();

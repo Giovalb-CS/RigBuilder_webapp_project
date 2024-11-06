@@ -24,11 +24,20 @@ public class API_Processor extends HttpServlet {
         Double maxRating;
     }
 
-
     private final ProcessorDAO processorDao = new ProcessorDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String clientApiKey = request.getHeader("X-API-KEY");
+        if (clientApiKey == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing API Key");
+            return;
+        }
+        if (!ApiKeyValidator.isApiKeyValid(clientApiKey)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "API Key invalid.");
+            return;
+        }
+
         List<Processor> processors = processorDao.doRetrieveAll();
 
         // Converti in JSON e invia la risposta
@@ -41,6 +50,16 @@ public class API_Processor extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String clientApiKey = request.getHeader("X-API-KEY");
+        if (clientApiKey == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing API Key");
+            return;
+        }
+        if (!ApiKeyValidator.isApiKeyValid(clientApiKey)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "API Key invalid.");
+            return;
+        }
+
         String pathInfo = request.getPathInfo();
         if (pathInfo != null && pathInfo.equals("/filters")) {
             // Riceve e gestisce i filtri
