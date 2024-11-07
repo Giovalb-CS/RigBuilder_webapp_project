@@ -7,7 +7,7 @@ import java.util.Base64;
 
 public class ApiKeyValidator {
 
-    private static final String STORED_API_KEY_HASH = "RF4miDMpEsb2ucKtt+V+13EJHMlXFzA7he/x0lr59OE="; // Hash esempio
+    private static final String STORED_API_KEY_HASH = "RF4miDMpEsb2ucKtt+V+13EJHMlXFzA7he/x0lr59OE=";
 
     public static boolean isApiKeyValid(String apiKey) {
         String hashedInputKey = hash(apiKey);
@@ -26,9 +26,8 @@ public class ApiKeyValidator {
     }
 
     public static void main(String[] args) {
-        String apiKey = "1P9N112129"; // La chiave API reale
+        String apiKey = "1P9N112129";
         String hash = hash(apiKey);
-        System.out.println(STORED_API_KEY_HASH);
         System.out.println("Hash della chiave API (da memorizzare): " + hash);
     }
 }

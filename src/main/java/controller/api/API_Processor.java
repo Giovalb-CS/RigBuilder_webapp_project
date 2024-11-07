@@ -10,12 +10,16 @@ import model.ProcessorDAO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "API_Processor", value = "/api/processors/*")
 public class API_Processor extends HttpServlet {
 
     private static class FilterParams {
+        String name;
+        String priceSort;
+        String ratingSort;
         Double minPrice;
         Double maxPrice;
         String socket;
@@ -74,14 +78,33 @@ public class API_Processor extends HttpServlet {
             Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             FilterParams filterParams = gson.fromJson(jsonBody.toString(), FilterParams.class);
 
-            List<Processor> processors = processorDao.doRetrieveFiltered(
-                    filterParams.minPrice,
-                    filterParams.maxPrice,
-                    filterParams.socket,
-                    filterParams.ramType,
-                    filterParams.minRating,
-                    filterParams.maxRating
-            );
+            List<Processor> processors = new ArrayList<>();
+
+            // Logica per i filtri e ordinamenti singoli
+            if (filterParams.name != null && !filterParams.name.isEmpty()) {
+                // Ricerca per nome
+                processors = processorDao.doRetrieveByName(filterParams.name);
+            } else if (filterParams.ratingSort != null && !filterParams.ratingSort.isEmpty()) {
+                // Ordinamento per rating
+                processors = filterParams.ratingSort.equals("asc")
+                        ? processorDao.doRetrieveAllByRatingAsc()
+                        : processorDao.doRetrieveAllByRatingDesc();
+            } else if (filterParams.priceSort != null && !filterParams.priceSort.isEmpty()) {
+                // Ordinamento per prezzo
+                processors = filterParams.priceSort.equals("asc")
+                        ? processorDao.doRetrieveAllByPriceAsc()
+                        : processorDao.doRetrieveAllByPriceDesc();
+            } else {
+                // Filtro composito
+                processors = processorDao.doRetrieveFiltered(
+                        filterParams.minPrice,
+                        filterParams.maxPrice,
+                        filterParams.socket,
+                        filterParams.ramType,
+                        filterParams.minRating,
+                        filterParams.maxRating
+                );
+            }
 
             // Converti la lista di processori in JSON e imposta la risposta
             String processorsJson = gson.toJson(processors);

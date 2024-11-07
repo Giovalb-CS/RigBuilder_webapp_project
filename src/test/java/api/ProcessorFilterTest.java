@@ -22,12 +22,15 @@ public class ProcessorFilterTest {
             // Creazione del JSON dei parametri di filtro
             Gson gson = new Gson();
             JsonObject filterParams = new JsonObject();
+//            filterParams.addProperty("name", "Intel");
+//            filterParams.addProperty("priceSort", "asc");
+//            filterParams.addProperty("ratingSort", "desc");
 //            filterParams.addProperty("minPrice", 100.0);
 //            filterParams.addProperty("maxPrice", 500.0);
-            filterParams.addProperty("socket", "LGA 1700");
-            filterParams.addProperty("ramType", "DDR5");
-            filterParams.addProperty("minRating", 3.0);
-            filterParams.addProperty("maxRating", 5.0);
+//            filterParams.addProperty("socket", "LGA 1700");
+//            filterParams.addProperty("ramType", "DDR5");
+//            filterParams.addProperty("minRating", 3.0);
+//            filterParams.addProperty("maxRating", 5.0);
 
             // Converte in JSON
             String jsonInputString = gson.toJson(filterParams);
