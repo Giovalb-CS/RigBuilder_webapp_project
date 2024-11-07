@@ -63,6 +63,13 @@ select option {
     background-color: var(--darkGrey);
 }
 
+select:hover,
+option:hover,
+select:focus:hover,
+select:-webkit-autofill:hover {
+    cursor: pointer;
+}
+
 input:focus, input:focus:hover, select:focus, select:focus:hover, textarea:focus, textarea:focus:hover {
     outline: none;
     border-color: var(--orange);

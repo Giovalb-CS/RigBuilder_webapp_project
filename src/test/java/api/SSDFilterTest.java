@@ -10,28 +10,27 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class RAMFilterTest {
+public class SSDFilterTest {
 
     private static final String API_KEY = "1P9N112129";
 
     public static void post(){
         try {
             // Endpoint URL
-            String endpointUrl = "http://localhost:8080/RigBuilder_webapp_project_war_exploded/api/rams/filters";
+            String endpointUrl = "http://localhost:8080/RigBuilder_webapp_project_war_exploded/api/ssds/filters";
 
             // Creazione del JSON dei parametri di filtro
             Gson gson = new Gson();
             JsonObject filterParams = new JsonObject();
-//            filterParams.addProperty("name", "");
+            filterParams.addProperty("name", "Samsung");
 //            filterParams.addProperty("priceSort", "asc");
 //            filterParams.addProperty("ratingSort", "desc");
-            filterParams.addProperty("minPrice", 0);
-            filterParams.addProperty("maxPrice", 50);
-            filterParams.addProperty("ramType", "DDR4");
-            filterParams.addProperty("minClock", "2400");
-            filterParams.addProperty("maxClock", "3000");
-            filterParams.addProperty("minRating", 3.0);
-            filterParams.addProperty("maxRating", 4.0);
+//            filterParams.addProperty("minPrice", 140);
+//            filterParams.addProperty("maxPrice", 150);
+//            filterParams.addProperty("minRating", 0);
+//            filterParams.addProperty("maxRating", 0);
+//            filterParams.addProperty("pcie_gen", "5x4");
+//            filterParams.addProperty("capacity", "1 TB");
 
             // Converte in JSON
             String jsonInputString = gson.toJson(filterParams);
@@ -71,7 +70,7 @@ public class RAMFilterTest {
     public static void get(){
         try {
             // Endpoint URL
-            String endpointUrl = "http://localhost:8080/RigBuilder_webapp_project_war_exploded/api/rams";
+            String endpointUrl = "http://localhost:8080/RigBuilder_webapp_project_war_exploded/api/ssds";
 
             // Configurazione della connessione
             URL url = new URL(endpointUrl);
@@ -97,6 +96,7 @@ public class RAMFilterTest {
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         System.out.println("Get Request:\n");
