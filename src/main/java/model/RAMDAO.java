@@ -321,28 +321,21 @@ public class RAMDAO {
             // Costruzione dinamica della query SQL
             StringBuilder sql = new StringBuilder("SELECT * FROM ram WHERE 1=1");
 
-            // Aggiunta del filtro per il rating
             if (minRating != null) {
                 sql.append(" AND rating >= ?");
             }
             if (maxRating != null) {
                 sql.append(" AND rating <= ?");
             }
-
-            // Aggiunta del filtro per il prezzo
             if (minPrice != null) {
                 sql.append(" AND price >= ?");
             }
             if (maxPrice != null) {
                 sql.append(" AND price <= ?");
             }
-
-            // Aggiunta del filtro per il tipo di RAM
             if (type != null && !type.isEmpty()) {
                 sql.append(" AND type = ?");
             }
-
-            // Aggiunta del filtro per la frequenza di clock
             if (clockMin != null) {
                 sql.append(" AND clock >= ?");
             }
@@ -354,17 +347,17 @@ public class RAMDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
 
             int paramIndex = 1;
-            if (minPrice != null) {
-                preparedStatement.setDouble(paramIndex++, minPrice);
-            }
-            if (maxPrice != null) {
-                preparedStatement.setDouble(paramIndex++, maxPrice);
-            }
             if (minRating != null) {
                 preparedStatement.setDouble(paramIndex++, minRating);
             }
             if (maxRating != null) {
                 preparedStatement.setDouble(paramIndex++, maxRating);
+            }
+            if (minPrice != null) {
+                preparedStatement.setDouble(paramIndex++, minPrice);
+            }
+            if (maxPrice != null) {
+                preparedStatement.setDouble(paramIndex++, maxPrice);
             }
             if (type != null && !type.isEmpty()) {
                 preparedStatement.setString(paramIndex++, type);
