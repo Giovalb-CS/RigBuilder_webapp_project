@@ -107,7 +107,6 @@ public class API_GPU extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String gpusJson = gson.toJson(gpus);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

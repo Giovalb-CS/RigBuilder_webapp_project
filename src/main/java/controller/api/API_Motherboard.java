@@ -111,7 +111,6 @@ public class API_Motherboard extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String motherboardsJson = gson.toJson(motherboards);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

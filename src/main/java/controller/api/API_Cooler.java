@@ -111,7 +111,6 @@ public class API_Cooler extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String coolersJson = gson.toJson(coolers);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

@@ -67,7 +67,6 @@ public class API_RAM extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
         if (pathInfo != null && pathInfo.equals("/filters")) {
-            // Riceve e gestisce i filtri
             BufferedReader reader = request.getReader();
             StringBuilder jsonBody = new StringBuilder();
             String line;
@@ -75,28 +74,22 @@ public class API_RAM extends HttpServlet {
                 jsonBody.append(line);
             }
 
-            // Deserializza i parametri di filtro dal JSON
             Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             FilterParams filterParams = gson.fromJson(jsonBody.toString(), FilterParams.class);
 
             List<RAM> rams = new ArrayList<>();
 
-            // Logica per i filtri e ordinamenti singoli
             if (filterParams.name != null && !filterParams.name.isEmpty()) {
-                // Ricerca per nome
                 rams = ramDAO.doRetrieveByName(filterParams.name);
             } else if (filterParams.ratingSort != null && !filterParams.ratingSort.isEmpty()) {
-                // Ordinamento per rating
                 rams = filterParams.ratingSort.equals("asc")
                         ? ramDAO.doRetrieveAllByRatingAsc()
                         : ramDAO.doRetrieveAllByRatingDesc();
             } else if (filterParams.priceSort != null && !filterParams.priceSort.isEmpty()) {
-                // Ordinamento per prezzo
                 rams = filterParams.priceSort.equals("asc")
                         ? ramDAO.doRetrieveAllByPriceAsc()
                         : ramDAO.doRetrieveAllByPriceDesc();
             } else {
-                // Filtro composito
                 rams = ramDAO.doRetrieveFiltered(
                         filterParams.minRating,
                         filterParams.maxRating,
@@ -108,7 +101,6 @@ public class API_RAM extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String ramsJson = gson.toJson(rams);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

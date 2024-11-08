@@ -115,7 +115,6 @@ public class API_PSU extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String psusJson = gson.toJson(psus);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

@@ -114,7 +114,6 @@ public class API_CaseBox extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
             String casesJson = gson.toJson(cases);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
