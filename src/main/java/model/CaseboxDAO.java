@@ -414,7 +414,6 @@ public class CaseboxDAO {
         return caseboxList;
     }
 
-
     public List<Casebox> doRetrieveAllByPSULenght(int minPSULength) {
         List<Casebox> caseboxList = new ArrayList<>();
         try {
