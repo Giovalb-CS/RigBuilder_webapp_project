@@ -403,7 +403,7 @@ public class CoolerDAO {
                 query.append(" AND cooler_height <= ?");
             }
             if (radiatorSize != null) {
-                query.append(" AND radiator_size <= ?");
+                query.append(" AND radiator_size = ?");
             }
             if (socket != null && !socket.isEmpty()) {
                 query.append(" AND socket LIKE ?");
@@ -448,6 +448,7 @@ public class CoolerDAO {
                 cooler.setPrice(resultSet.getDouble("price"));
                 cooler.setShop_URL(resultSet.getString("shop_url"));
                 cooler.setImage_URL(resultSet.getString("image_url"));
+                cooler.setTdp(Integer.parseInt(resultSet.getString("tdp")));
                 cooler.setRpm(resultSet.getInt("rpm"));
                 cooler.setNoise_level(resultSet.getInt("noise_level"));
                 cooler.setRadiator_size(resultSet.getInt("radiator_size"));
