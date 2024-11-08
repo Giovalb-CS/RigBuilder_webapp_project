@@ -530,16 +530,16 @@ public class MotherboardDAO {
                 query.append(" AND price <= ?");
             }
             if (socket != null && !socket.isEmpty()) {
-                query.append(" AND socket LIKE ?");
+                query.append(" AND socket = ?");
             }
             if (chipset != null && !chipset.isEmpty()) {
-                query.append(" AND chipset LIKE ?");
+                query.append(" AND chipset = ?");
             }
             if (ramType != null && !ramType.isEmpty()) {
-                query.append(" AND ram_type LIKE ?");
+                query.append(" AND ram_type = ?");
             }
             if (formFactor != null && !formFactor.isEmpty()) {
-                query.append(" AND form_factor LIKE ?");
+                query.append(" AND form_factor = ?");
             }
 
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -559,16 +559,16 @@ public class MotherboardDAO {
                 preparedStatement.setDouble(paramIndex++, maxPrice);
             }
             if (socket != null && !socket.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + socket + "%");
+                preparedStatement.setString(paramIndex++, socket);
             }
             if (chipset != null && !chipset.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + chipset + "%");
+                preparedStatement.setString(paramIndex++, chipset);
             }
             if (ramType != null && !ramType.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + ramType + "%");
+                preparedStatement.setString(paramIndex++, ramType);
             }
             if (formFactor != null && !formFactor.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + formFactor + "%");
+                preparedStatement.setString(paramIndex++, formFactor);
             }
 
             ResultSet resultSet = preparedStatement.executeQuery();
