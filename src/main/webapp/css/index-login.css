@@ -48,7 +48,7 @@ body {
     min-width: 20em;
 }
 
-.image-container img {
+.image-container img, svg {
     width: 14em;
 }
 
@@ -56,14 +56,59 @@ body {
     font-weight: bold;
     font-size: 110%;
     margin: 0.2em 0;
+    user-select: none;
 }
 
 @media screen and (max-width: 655px) {
     .top-container {
         flex-direction: column;
+        margin-bottom: 1em;
     }
 
     .image-container {
         margin-bottom: 1.5em;
     }
+
+    .admin-footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+    }
+
+    .form-container {
+        padding: 1.8em;
+    }
+
+    .image-container img, svg {
+        width: 10em;
+    }
 }
+
+.svg-logo {
+    transition: transform 1s ease-in-out;
+}
+
+.svg-logo-casing {
+    transform-origin: center center;
+    transform: rotate(0deg);
+}
+
+.svg-logo-fan {
+    display: inline-block;
+    transform-origin: 49.8% 41.9%;
+    animation: rotateAnimation 2.3s linear infinite;
+}
+
+.svg-logo-fan:active {
+    animation-play-state: paused;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
