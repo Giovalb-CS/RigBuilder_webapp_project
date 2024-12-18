@@ -26,9 +26,61 @@ public class API_Processor extends HttpServlet {
         String ramType;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", socket='" + socket + '\'' +
+                    ", ramType='" + ramType + '\'' +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final ProcessorDAO processorDao = new ProcessorDAO();
+
+    // Creazione di una classe wrapper per includere tutti i dati
+    public static class DataWrapper {
+        List<Processor> processors;
+        List<String> sockets;
+        List<String> ramTypes;
+
+        public DataWrapper(List<Processor> processors, List<String> sockets, List<String> ramTypes) {
+            this.processors = processors;
+            this.sockets = sockets;
+            this.ramTypes = ramTypes;
+        }
+
+        public List<Processor> getProcessors() {
+            return processors;
+        }
+
+        public void setProcessors(List<Processor> processors) {
+            this.processors = processors;
+        }
+
+        public List<String> getSockets() {
+            return sockets;
+        }
+
+        public void setSockets(List<String> sockets) {
+            this.sockets = sockets;
+        }
+
+        public List<String> getRamTypes() {
+            return ramTypes;
+        }
+
+        public void setRamTypes(List<String> ramTypes) {
+            this.ramTypes = ramTypes;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,15 +94,21 @@ public class API_Processor extends HttpServlet {
             return;
         }
 
+        // Recupera i processori, i socket e i tipi di RAM
         List<Processor> processors = processorDao.doRetrieveAll();
+        List<String> sockets = processorDao.doRetrieveDistinctSockets();
+        List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
 
-        // Converti in JSON e invia la risposta
+        // Invia i dati al client come JSON
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String processorsJson = gson.toJson(processors);
+        DataWrapper dataWrapper = new DataWrapper(processors, sockets, ramTypes);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(processorsJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /processors");
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,7 +124,6 @@ public class API_Processor extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
         if (pathInfo != null && pathInfo.equals("/filters")) {
-            // Riceve e gestisce i filtri
             BufferedReader reader = request.getReader();
             StringBuilder jsonBody = new StringBuilder();
             String line;
@@ -74,28 +131,22 @@ public class API_Processor extends HttpServlet {
                 jsonBody.append(line);
             }
 
-            // Deserializza i parametri di filtro dal JSON
             Gson gson = new GsonBuilder().disableHtmlEscaping().create();
             FilterParams filterParams = gson.fromJson(jsonBody.toString(), FilterParams.class);
 
             List<Processor> processors = new ArrayList<>();
 
-            // Logica per i filtri e ordinamenti singoli
             if (filterParams.name != null && !filterParams.name.isEmpty()) {
-                // Ricerca per nome
                 processors = processorDao.doRetrieveByName(filterParams.name);
             } else if (filterParams.ratingSort != null && !filterParams.ratingSort.isEmpty()) {
-                // Ordinamento per rating
                 processors = filterParams.ratingSort.equals("asc")
                         ? processorDao.doRetrieveAllByRatingAsc()
                         : processorDao.doRetrieveAllByRatingDesc();
             } else if (filterParams.priceSort != null && !filterParams.priceSort.isEmpty()) {
-                // Ordinamento per prezzo
                 processors = filterParams.priceSort.equals("asc")
                         ? processorDao.doRetrieveAllByPriceAsc()
                         : processorDao.doRetrieveAllByPriceDesc();
             } else {
-                // Filtro composito
                 processors = processorDao.doRetrieveFiltered(
                         filterParams.minPrice,
                         filterParams.maxPrice,
@@ -106,11 +157,15 @@ public class API_Processor extends HttpServlet {
                 );
             }
 
-            // Converti la lista di processori in JSON e imposta la risposta
-            String processorsJson = gson.toJson(processors);
+            List<String> sockets = processorDao.doRetrieveDistinctSockets();
+            List<String> ramTypes = processorDao.doRetrieveDistinctRamTypes();
+
+            DataWrapper dataWrapper = new DataWrapper(processors, sockets, ramTypes);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(processorsJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /processors/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

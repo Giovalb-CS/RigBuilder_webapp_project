@@ -29,9 +29,82 @@ public class API_Motherboard extends HttpServlet {
         String formFactor;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", socket='" + socket + '\'' +
+                    ", chipset='" + chipset + '\'' +
+                    ", ramType='" + ramType + '\'' +
+                    ", formFactor='" + formFactor + '\'' +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final MotherboardDAO motherboardDAO = new MotherboardDAO();
+
+    public static class DataWrapper {
+        ArrayList<Motherboard> motherboards;
+        List<String> sockets;
+        List<String> chipsets;
+        List<String> ramTypes;
+        List<String> formFactors;
+
+        public DataWrapper(ArrayList<Motherboard> motherboards, List<String> sockets, List<String> chipsets, List<String> ramTypes, List<String> formFactors) {
+            this.motherboards = motherboards;
+            this.sockets = sockets;
+            this.chipsets = chipsets;
+            this.ramTypes = ramTypes;
+            this.formFactors = formFactors;
+        }
+
+        public ArrayList<Motherboard> getMotherboards() {
+            return motherboards;
+        }
+
+        public void setMotherboards(ArrayList<Motherboard> motherboards) {
+            this.motherboards = motherboards;
+        }
+
+        public List<String> getSockets() {
+            return sockets;
+        }
+
+        public void setSockets(List<String> sockets) {
+            this.sockets = sockets;
+        }
+
+        public List<String> getChipsets() {
+            return chipsets;
+        }
+
+        public void setChipsets(List<String> chipsets) {
+            this.chipsets = chipsets;
+        }
+
+        public List<String> getRamTypes() {
+            return ramTypes;
+        }
+
+        public void setRamTypes(List<String> ramTypes) {
+            this.ramTypes = ramTypes;
+        }
+
+        public List<String> getFormFactors() {
+            return formFactors;
+        }
+
+        public void setFormFactors(List<String> formFactors) {
+            this.formFactors = formFactors;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,14 +118,20 @@ public class API_Motherboard extends HttpServlet {
             return;
         }
 
-        List<Motherboard> motherboards = motherboardDAO.doRetrieveAll();
+        ArrayList<Motherboard> motherboards = (ArrayList<Motherboard>) motherboardDAO.doRetrieveAll();
+        List<String> sockets = motherboardDAO.doRetrieveDistinctSockets();
+        List<String> chipsets = motherboardDAO.doRetrieveDistinctChipsets();
+        List<String> ramTypes = motherboardDAO.doRetrieveDistinctRamTypes();
+        List<String> formFactors = motherboardDAO.doRetrieveDistinctFormFactors();
 
         // Converti in JSON e invia la risposta
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String motherboardsJson = gson.toJson(motherboards);
+        DataWrapper dataWrapper = new DataWrapper(motherboards, sockets, chipsets, ramTypes, formFactors);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(motherboardsJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /motherboards");
     }
 
     @Override
@@ -111,10 +190,17 @@ public class API_Motherboard extends HttpServlet {
                 );
             }
 
-            String motherboardsJson = gson.toJson(motherboards);
+            List<String> sockets = motherboardDAO.doRetrieveDistinctSockets();
+            List<String> chipsets = motherboardDAO.doRetrieveDistinctChipsets();
+            List<String> ramTypes = motherboardDAO.doRetrieveDistinctRamTypes();
+            List<String> formFactors = motherboardDAO.doRetrieveDistinctFormFactors();
+
+            DataWrapper dataWrapper = new DataWrapper((ArrayList<Motherboard>) motherboards, sockets, chipsets, ramTypes, formFactors);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(motherboardsJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /motherboards/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

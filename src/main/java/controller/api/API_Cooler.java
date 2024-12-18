@@ -29,9 +29,62 @@ public class API_Cooler extends HttpServlet {
         Integer maxCoolerHeight;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", socket='" + socket + '\'' +
+                    ", radiatorSize=" + radiatorSize +
+                    ", minCoolerHeight=" + minCoolerHeight +
+                    ", maxCoolerHeight=" + maxCoolerHeight +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final CoolerDAO coolerDAO = new CoolerDAO();
+
+    public static class DataWrapper {
+        List<Cooler> coolers;
+        List<String> sockets;
+        List<String> radiatorSizes;
+
+        public List<Cooler> getCoolers() {
+            return coolers;
+        }
+
+        public void setCoolers(List<Cooler> coolers) {
+            this.coolers = coolers;
+        }
+
+        public List<String> getSockets() {
+            return sockets;
+        }
+
+        public void setSockets(List<String> sockets) {
+            this.sockets = sockets;
+        }
+
+        public List<String> getRadiatorSizes() {
+            return radiatorSizes;
+        }
+
+        public void setRadiatorSizes(List<String> radiatorSizes) {
+            this.radiatorSizes = radiatorSizes;
+        }
+
+        public DataWrapper(List<Cooler> coolers, List<String> sockets, List<String> radiatorSizes) {
+            this.coolers = coolers;
+            this.sockets = sockets;
+            this.radiatorSizes = radiatorSizes;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,13 +99,17 @@ public class API_Cooler extends HttpServlet {
         }
 
         List<Cooler> coolers = coolerDAO.doRetrieveAll();
+        List<String> sockets = coolerDAO.doRetrieveDistinctSockets();
+        List<String> radiatorSizes = coolerDAO.doRetrieveDistinctRadiatorSizes();
 
         // Converti in JSON e invia la risposta
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String coolersJson = gson.toJson(coolers);
+        DataWrapper dataWrapper = new DataWrapper(coolers, sockets, radiatorSizes);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(coolersJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /coolers");
     }
 
     @Override
@@ -111,10 +168,15 @@ public class API_Cooler extends HttpServlet {
                 );
             }
 
-            String coolersJson = gson.toJson(coolers);
+            List<String> sockets = coolerDAO.doRetrieveDistinctSockets();
+            List<String> radiatorSizes = coolerDAO.doRetrieveDistinctRadiatorSizes();
+
+            DataWrapper dataWrapper = new DataWrapper(coolers, sockets, radiatorSizes);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(coolersJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /coolers/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

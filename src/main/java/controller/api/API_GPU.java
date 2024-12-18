@@ -28,9 +28,51 @@ public class API_GPU extends HttpServlet {
         Integer maxLenght;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", memoryType='" + memoryType + '\'' +
+                    ", maxSlotWidth=" + maxSlotWidth +
+                    ", maxLenght=" + maxLenght +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final GPUDAO gpuDAO = new GPUDAO();
+
+    public static class DataWrapper {
+        List<GPU> gpus;
+        List<String> memoryTypes;
+
+        public List<GPU> getGpus() {
+            return gpus;
+        }
+
+        public void setGpus(List<GPU> gpus) {
+            this.gpus = gpus;
+        }
+
+        public List<String> getMemoryTypes() {
+            return memoryTypes;
+        }
+
+        public void setMemoryTypes(List<String> memoryTypes) {
+            this.memoryTypes = memoryTypes;
+        }
+
+        public DataWrapper(List<GPU> gpus, List<String> memoryTypes) {
+            this.gpus = gpus;
+            this.memoryTypes = memoryTypes;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,12 +87,15 @@ public class API_GPU extends HttpServlet {
         }
 
         List<GPU> gpus = gpuDAO.doRetrieveAll();
+        List<String> memoryTypes = gpuDAO.doRetrieveDistinctMemoryTypes();
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String gpusJson = gson.toJson(gpus);
+        DataWrapper dataWrapper = new DataWrapper(gpus, memoryTypes);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(gpusJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /gpus");
     }
 
     @Override
@@ -107,10 +152,14 @@ public class API_GPU extends HttpServlet {
                 );
             }
 
-            String gpusJson = gson.toJson(gpus);
+            List<String> memoryTypes = gpuDAO.doRetrieveDistinctMemoryTypes();
+
+            DataWrapper dataWrapper = new DataWrapper(gpus, memoryTypes);
+            String gpusJson = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(gpusJson);
+            System.out.println("POST: /gpus/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

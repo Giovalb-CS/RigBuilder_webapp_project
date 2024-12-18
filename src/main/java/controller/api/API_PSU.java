@@ -31,9 +31,64 @@ public class API_PSU extends HttpServlet {
         Integer maxLenght;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", type='" + type + '\'' +
+                    ", efficiency='" + efficiency + '\'' +
+                    ", minWattage=" + minWattage +
+                    ", maxWattage=" + maxWattage +
+                    ", minLenght=" + minLenght +
+                    ", maxLenght=" + maxLenght +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final PSUDAO psuDAO = new PSUDAO();
+
+    public static class DataWrapper {
+        List<PSU> psus;
+        List<String> types;
+        List<String> efficiencies;
+
+        public List<PSU> getPsus() {
+            return psus;
+        }
+
+        public void setPsus(List<PSU> psus) {
+            this.psus = psus;
+        }
+
+        public List<String> getTypes() {
+            return types;
+        }
+
+        public void setTypes(List<String> types) {
+            this.types = types;
+        }
+
+        public List<String> getEfficiencies() {
+            return efficiencies;
+        }
+
+        public void setEfficiencies(List<String> efficiencies) {
+            this.efficiencies = efficiencies;
+        }
+
+        public DataWrapper(List<PSU> psus, List<String> types, List<String> efficiencies) {
+            this.psus = psus;
+            this.types = types;
+            this.efficiencies = efficiencies;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,13 +103,17 @@ public class API_PSU extends HttpServlet {
         }
 
         List<PSU> psus = psuDAO.doRetrieveAll();
+        List<String> types = psuDAO.doRetrieveDistinctTypes();
+        List<String> efficiencies = psuDAO.doRetrieveDistinctEfficiencyTypes();
 
         // Converti in JSON e invia la risposta
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String psusJson = gson.toJson(psus);
+        DataWrapper dataWrapper = new DataWrapper(psus, types, efficiencies);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(psusJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /psus");
     }
 
     @Override
@@ -115,10 +174,15 @@ public class API_PSU extends HttpServlet {
                 );
             }
 
-            String psusJson = gson.toJson(psus);
+            List<String> types = psuDAO.doRetrieveDistinctTypes();
+            List<String> efficiencies = psuDAO.doRetrieveDistinctEfficiencyTypes();
+
+            DataWrapper dataWrapper = new DataWrapper(psus, types, efficiencies);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(psusJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /psus/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

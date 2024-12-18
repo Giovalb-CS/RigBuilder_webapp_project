@@ -26,9 +26,60 @@ public class API_SSD extends HttpServlet {
         String capacity;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", pcie_gen='" + pcie_gen + '\'' +
+                    ", capacity='" + capacity + '\'' +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final SSDDAO ssdDAO = new SSDDAO();
+
+    public static class DataWrapper {
+        List<SSD> ssds;
+        List<String> pcie_gens;
+        List<String> capacities;
+
+        public List<SSD> getSsds() {
+            return ssds;
+        }
+
+        public void setSsds(List<SSD> ssds) {
+            this.ssds = ssds;
+        }
+
+        public List<String> getPcie_gens() {
+            return pcie_gens;
+        }
+
+        public void setPcie_gens(List<String> pcie_gens) {
+            this.pcie_gens = pcie_gens;
+        }
+
+        public List<String> getCapacities() {
+            return capacities;
+        }
+
+        public void setCapacities(List<String> capacities) {
+            this.capacities = capacities;
+        }
+
+        public DataWrapper(List<SSD> ssds, List<String> pcie_gens, List<String> capacities) {
+            this.ssds = ssds;
+            this.pcie_gens = pcie_gens;
+            this.capacities = capacities;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,12 +94,16 @@ public class API_SSD extends HttpServlet {
         }
 
         List<SSD> ssds = ssdDAO.doRetrieveAll();
+        List<String> pcie_gens = ssdDAO.doRetrieveDistinctPCIeGenerations();
+        List<String> capacities = ssdDAO.doRetrieveDistinctCapacities();
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String ssdsJson = gson.toJson(ssds);
+        DataWrapper data = new DataWrapper(ssds, pcie_gens, capacities);
+        String jsonResponse = gson.toJson(data);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(ssdsJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /ssds");
     }
 
     @Override
@@ -98,10 +153,15 @@ public class API_SSD extends HttpServlet {
                         );
             }
 
-            String ssdsJson = gson.toJson(ssds);
+            List<String> pcie_gens = ssdDAO.doRetrieveDistinctPCIeGenerations();
+            List<String> capacities = ssdDAO.doRetrieveDistinctCapacities();
+
+            DataWrapper data = new DataWrapper(ssds, pcie_gens, capacities);
+            String jsonResponse = gson.toJson(data);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(ssdsJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /ssds/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS rigbuilder;
-CREATE DATABASE rigbuilder;
+# DROP DATABASE IF EXISTS rigbuilder;
+# CREATE DATABASE rigbuilder;
 USE rigbuilder;
 
 #Admin(email, password, id)

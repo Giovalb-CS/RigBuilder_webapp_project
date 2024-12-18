@@ -28,9 +28,51 @@ public class API_RAM extends HttpServlet {
         Integer maxClock;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", ramType='" + ramType + '\'' +
+                    ", minClock=" + minClock +
+                    ", maxClock=" + maxClock +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final RAMDAO ramDAO = new RAMDAO();
+
+    public static class DataWrapper {
+        List<RAM> rams;
+        List<String> ramTypes;
+
+        public List<RAM> getRams() {
+            return rams;
+        }
+
+        public void setRams(List<RAM> rams) {
+            this.rams = rams;
+        }
+
+        public List<String> getRamTypes() {
+            return ramTypes;
+        }
+
+        public void setRamTypes(List<String> ramTypes) {
+            this.ramTypes = ramTypes;
+        }
+
+        public DataWrapper(List<RAM> rams, List<String> ramTypes) {
+            this.rams = rams;
+            this.ramTypes = ramTypes;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,12 +87,15 @@ public class API_RAM extends HttpServlet {
         }
 
         List<RAM> rams = ramDAO.doRetrieveAll();
+        List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String ramsJson = gson.toJson(rams);
+        DataWrapper dataWrapper = new DataWrapper(rams, ramTypes);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(ramsJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /rams");
     }
 
     @Override
@@ -101,10 +146,14 @@ public class API_RAM extends HttpServlet {
                 );
             }
 
-            String ramsJson = gson.toJson(rams);
+            List<String> ramTypes = ramDAO.doRetrieveDistinctRamTypes();
+
+            DataWrapper dataWrapper = new DataWrapper(rams, ramTypes);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(ramsJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /rams/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }

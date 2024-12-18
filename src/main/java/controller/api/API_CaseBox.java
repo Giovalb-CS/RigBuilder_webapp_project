@@ -30,9 +30,64 @@ public class API_CaseBox extends HttpServlet {
         Integer minPCIeSlots;
         Double minRating;
         Double maxRating;
+
+        @Override
+        public String toString() {
+            return "FilterParams{" +
+                    "name='" + name + '\'' +
+                    ", priceSort='" + priceSort + '\'' +
+                    ", ratingSort='" + ratingSort + '\'' +
+                    ", minPrice=" + minPrice +
+                    ", maxPrice=" + maxPrice +
+                    ", minCoolerHeight=" + minCoolerHeight +
+                    ", minRadiatorSize=" + minRadiatorSize +
+                    ", minGPULength=" + minGPULength +
+                    ", formFactor='" + formFactor + '\'' +
+                    ", minPSULength=" + minPSULength +
+                    ", minPCIeSlots=" + minPCIeSlots +
+                    ", minRating=" + minRating +
+                    ", maxRating=" + maxRating +
+                    '}';
+        }
     }
 
     private final CaseboxDAO caseboxDAO = new CaseboxDAO();
+
+    public static class DataWrapper {
+        List<Casebox> cases;
+        List<String> radiatorSizes;
+        List<String> formFactors;
+
+        public List<Casebox> getCases() {
+            return cases;
+        }
+
+        public void setCases(List<Casebox> cases) {
+            this.cases = cases;
+        }
+
+        public List<String> getRadiatorSizes() {
+            return radiatorSizes;
+        }
+
+        public void setRadiatorSizes(List<String> radiatorSizes) {
+            this.radiatorSizes = radiatorSizes;
+        }
+
+        public List<String> getFormFactors() {
+            return formFactors;
+        }
+
+        public void setFormFactors(List<String> formFactors) {
+            this.formFactors = formFactors;
+        }
+
+        public DataWrapper(List<Casebox> cases, List<String> radiatorSizes, List<String> formFactors) {
+            this.cases = cases;
+            this.radiatorSizes = radiatorSizes;
+            this.formFactors = formFactors;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,13 +102,17 @@ public class API_CaseBox extends HttpServlet {
         }
 
         List<Casebox> cases = caseboxDAO.doRetrieveAll();
+        List<String> radiatorSizes = caseboxDAO.doRetrieveDistinctRadiatorSizes();
+        List<String> formFactors = caseboxDAO.doRetrieveDistinctFormFactors();
 
         // Converti in JSON e invia la risposta
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String casesJson = gson.toJson(cases);
+        DataWrapper dataWrapper = new DataWrapper(cases, radiatorSizes, formFactors);
+        String jsonResponse = gson.toJson(dataWrapper);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(casesJson);
+        response.getWriter().write(jsonResponse);
+        System.out.println("GET: /cases");
     }
 
     @Override
@@ -114,10 +173,15 @@ public class API_CaseBox extends HttpServlet {
                 );
             }
 
-            String casesJson = gson.toJson(cases);
+            List<String> radiatorSizes = caseboxDAO.doRetrieveDistinctRadiatorSizes();
+            List<String> formFactors = caseboxDAO.doRetrieveDistinctFormFactors();
+
+            DataWrapper dataWrapper = new DataWrapper(cases, radiatorSizes, formFactors);
+            String jsonResponse = gson.toJson(dataWrapper);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(casesJson);
+            response.getWriter().write(jsonResponse);
+            System.out.println("POST: /cases/filters\n" + filterParams.toString());
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid endpoint.");
         }
