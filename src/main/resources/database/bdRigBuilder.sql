@@ -1,6 +1,7 @@
 # DROP DATABASE IF EXISTS rigbuilder;
 # CREATE DATABASE rigbuilder;
-USE rigbuilder;
+# USE rigbuilder;
+USE p5uucxui7h661tgv;
 
 #Admin(email, password, id)
 create table Administrator(
